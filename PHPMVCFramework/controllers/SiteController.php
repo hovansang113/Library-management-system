@@ -16,14 +16,15 @@ class SiteController extends Controller{
         return $this->render('contact');
     }
 
+    public function product(){
+        return $this->render('product');
+    }
+
 
 
     public function handleContact(Request $request){
         $body = Application::$app->request->getBody();
-        echo '<pre>';
-        var_dump($body);
-        echo'</pre>';
-        exit;
+
         return 'Handling submitted data';
     }
 }

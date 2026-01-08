@@ -3,7 +3,7 @@ namespace App\core;
 abstract class Model{
 
 
-    public const RULE_REQUIED = 'required';
+    public const RULE_REQUIRED = 'required';
     public const RULE_EMAIL = 'email';
     public const RULE_MIN = 'min';
     public const RULE_MAX = 'max';
@@ -22,14 +22,14 @@ abstract class Model{
     public array $errors = [];
 
     public function validate(){
-        foreach($this->rules() as $attribute => $rule){
+        foreach($this->rules() as $attribute => $rules){
             $value = $this->{$attribute};
             foreach($rules as $rule){
                 $ruleName = $rule;
                 if(!is_string($ruleName)){
                     $ruleName = $rule[0];
                 }
-                if($ruleName === self::RULE_REQUIRED && !value){
+                if($ruleName === self::RULE_REQUIRED && !$value){
                     $this->addError($attribute, self::RULE_REQUIRED);
                 }
             }
@@ -37,7 +37,7 @@ abstract class Model{
 
         return empty($this->errors);
     }
-    public function addEror(string $attribute, string $rule){
+    public function addError(string $attribute, string $rule){
         $message = $this->errorMessages()[$rule] ?? '';
         $this->errors[$attribute][] = $message;
     }

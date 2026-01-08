@@ -42,6 +42,13 @@ class Request
     public function isPost(){
         return $this->method() === 'POST';
     }
+    public function isPut(){
+        return $this->method() === 'PUT';
+    }
+    public function isDelete(){
+        return $this->method() === 'DELETE';
+    }
+
 
     public function getBody(){
         $body = [];
@@ -54,6 +61,17 @@ class Request
         if (strtolower($this->method()) === 'get') {
             foreach ($_GET as $key => $value) {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        if (strtolower($this->method()) === 'put') {
+            parse_str(file_get_contents("php://input"), $putVars);
+            foreach ($putVars as $key => $value) {
+                $body[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        if (strtolower($this->method()) === 'delete') {
+            foreach ($_SERVER as $key => $value) {
+                $body[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
         return $body;

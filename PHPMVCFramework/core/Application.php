@@ -16,6 +16,7 @@
             $this->request = new Request();
             $this->response = new Response(); // this trong này dùng để truy cập các thuộc tính của object 
             $this->router = new Router($this->request, $this->response);
+            $this->controller = new Controller(); // Initialize default controller
         }
 
         public function run()
