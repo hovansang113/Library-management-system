@@ -37,12 +37,19 @@ class AuthController extends Controller{
                 
                 if($user){
                     
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user_email'] = $user['email'];
-                    $_SESSION['user_firstname'] = $user['firstname'];
+                    $_SESSION['user_id'] = $user['MemberID'];    
+                    $_SESSION['user_email'] = $user['Email'];     
+                    $_SESSION['user_name'] = $user['UserName'];   
+                    $_SESSION['user_role'] = $user['Role'];       
                     
-                    header('Location: /');
-                    exit;
+                    if($user['Role']=='Admin'){
+                        header('Location: /admin/dashboard');
+                        exit;
+                    } else {
+                        header('Location: /');
+                        exit;
+                    }
+                    
                 } else {
                     $errors[] = 'Invalid email or password';
                 }
