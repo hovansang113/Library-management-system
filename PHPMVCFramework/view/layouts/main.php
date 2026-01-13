@@ -29,7 +29,7 @@
                     <a class="nav-link" href="/product">Product</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link" href="/Login">Login</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/register">Register</a>
