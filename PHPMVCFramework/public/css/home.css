@@ -1,12 +1,12 @@
-/* Reset & font  */
+
 body {
     margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
-    background: #f7f9fc;
+    background: #F3F8FD;
     color: #222;
 }
 
-/* Hero Section (chia 2 cột) */
 .hero {
     display: flex;
     justify-content: space-between;
@@ -37,10 +37,6 @@ body {
     position: relative;
 }
 
-/* New Arrivals section */
-.new-arrivals {
-    padding: 60px 100px;
-}
 
 .new-arrivals h2 {
     font-size: 32px;
@@ -52,7 +48,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* Grid sách (book list) */
+
 .book-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -70,7 +66,7 @@ body {
     border-radius: 6px;
 }
 
-/* SLIDER */
+
 .slider {
     width: 100%;
     height: 350px;
@@ -82,7 +78,7 @@ body {
 .slider-track {
     display: flex;
     height: 100%;
-    width: 100%; /* 4 ảnh */
+    width: 100%; 
     transition: transform 1s ease-in-out;
 }
 
@@ -91,4 +87,147 @@ body {
     height: 100%;
     object-fit: cover;
 }
+.new-arrivals {
+    padding: 60px 0;
+    background-color: #F3F8FD;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+.section-title {
+    font-size: 2rem;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #888;
+    margin-bottom: 40px;
+}
+
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: flex-start;
+}
+
+/* Thẻ Card chính */
+.book-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    width: 280px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+
+.book-cover img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+
+.book-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.book-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+    color: #111;
+    line-height: 1.3;
+}
+
+.status-badge {
+    background-color: #7c83db;
+    color: white;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+
+.book-info {
+    margin-bottom: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.info-item i {
+    font-size: 14px;
+    width: 16px;
+}
+
+.info-item p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+.info-item.category p {
+    background-color: #f1f3f6;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+
+.divider {
+    height: 1px;
+    background-color: #eeeeee;
+    margin: 10px 0 20px 0;
+}
+
+
+.book-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; 
+}
+
+.availability {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.btn-details {
+    background-color: #6a76e0;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.btn-details:hover {
+    background-color: #5562cc;
+}

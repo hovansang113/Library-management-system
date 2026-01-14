@@ -22,36 +22,53 @@
         <div class="hero-image">
             <div class="slider">
                 <div class="slider-track">
-                    <img src="/img/hompage/deep-work.jpg" class="slide active">
-                    <img src="/img/hompage/slide1.jpg" class="slide"> 
-                    <img src="/img/hompage/slide2.jpg" class="slide"> 
-                    <img src="/img/hompage/slide3.jpg" class="slide">
+                    <img src="/img/homepage/deep-work.jpg" class="slide active">
+                    <img src="/img/homepage/slide1.jpg" class="slide"> 
+                    <img src="/img/homepage/slide2.jpg" class="slide"> 
+                    <img src="/img/homepage/slide3.jpg" class="slide">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW ARRIVALS -->
     <section class="new-arrivals">
-        <h2>New Arrivals</h2>
+        <h2 class="section-title">New Arrivals</h2>
         <p class="subtitle">Fresh additions to our collection</p>
 
         <div class="book-list">
-            <div class="book-card">
-                <img src="/images/book1.jpg">
-            </div>  
-            <div class="book-card">
-                <img src="/images/book2.jpg">
-            </div>
-            <div class="book-card">
-                <img src="/images/book3.jpg">
-            </div>
-            <div class="book-card">
-                <img src="/images/book4.jpg">
-            </div>
+            <?php foreach ($books as $book): ?>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="<?php echo $book['Image']; ?>" alt="<?php echo $book['Title']; ?>">
+                    </div>
+                    
+                    <div class="book-header">
+                        <h3 class="book-title"><?php echo $book['Title']; ?></h3>
+                        <span class="status-badge"><?php echo $book['Status']; ?></span>
+                    </div>
+                    
+                    <div class="book-info">
+                        <div class="info-item">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <p><?php echo $book['Author']; ?></p>
+                        </div>
+                        <div class="info-item category">
+                            <i class="fa-solid fa-tags"></i>
+                            <p><?php echo $book['Category']; ?></p>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+                    
+                    <div class="book-footer">
+                        <p class="availability">
+                            Status <?= $book['AvailableCopies']; ?> / <?= $book['Quantity']; ?>
+                        </p>
+                        <a href="/book/<?= $book['BookID']; ?>" class="btn-details">View details</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </section>
-
-</body>
 <script src="/js/homePage.js"></script>
 </html>
