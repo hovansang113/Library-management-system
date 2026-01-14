@@ -1,0 +1,94 @@
+/* Reset & font  */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    color: #222;
+}
+
+/* Hero Section (chia 2 cột) */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: ceanter;
+    padding: 80px 100px;
+    background: #F3F8FD
+;
+    max-width: 1200px;   
+    margin: auto; 
+}
+
+.hero-text {
+    width: 45%;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.hero-image {
+    width: 45%;
+    position: relative;
+}
+
+/* New Arrivals section */
+.new-arrivals {
+    padding: 60px 100px;
+}
+
+.new-arrivals h2 {
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Grid sách (book list) */
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.book-card {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.book-card img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* SLIDER */
+.slider {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    object-fit: contain;  
+    position: relative;
+}
+
+.slider-track {
+    display: flex;
+    height: 100%;
+    width: 100%; /* 4 ảnh */
+    transition: transform 1s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
