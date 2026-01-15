@@ -38,16 +38,16 @@
 
         <div class="book-list">
             <div class="book-card">
-                <img src="/images/book1.jpg">
+                <img src="/img/hompage/slide1.jpg">
             </div>  
             <div class="book-card">
-                <img src="/images/book2.jpg">
+                <img src="/img/hompage/slide2.jpg">
             </div>
             <div class="book-card">
-                <img src="/images/book3.jpg">
+                <img src="/img/hompage/slide3.jpg">
             </div>
             <div class="book-card">
-                <img src="/images/book4.jpg">
+                <img src="/img/hompage/slide4.jpg">
             </div>
         </div>
     </section>

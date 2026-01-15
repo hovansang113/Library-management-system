@@ -11,7 +11,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: ceanter;
-    padding: 80px 100px;
+    padding: 80px 0;
     background: #F3F8FD
 ;
     max-width: 1200px;   
@@ -40,6 +40,7 @@ body {
 /* New Arrivals section */
 .new-arrivals {
     padding: 60px 100px;
+    padding: 80px 0;
 }
 
 .new-arrivals h2 {
