@@ -3,8 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-
+require_once __DIR__ . '/../vendor/autoload.php';
 use App\core\Application;
 use App\controllers\SiteController;
 use App\controllers\AuthController;
@@ -27,7 +26,7 @@ $app = new Application(dirname(__DIR__), $config);
 $app->router->get('/', [SiteController::class, 'home']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'handleContact']);
-$app->router->get('/product', [SiteController::class, 'product']);
+
 
 // Auth pages
 $app->router->get('/Login', [AuthController::class, 'Login']);

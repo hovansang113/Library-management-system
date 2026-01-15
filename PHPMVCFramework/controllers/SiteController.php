@@ -7,14 +7,20 @@ use App\core\Request;
 
 class SiteController extends Controller{
     public function home(){
+        $HomeModel = new \App\model\HomeModel();
+        $letestBooks = $HomeModel->getLatestBooks(4);
         $params = [
-            'name' => "thecodeholic"
+            'books' => $letestBooks
         ];
         return $this->render('home', $params);
     }
+
+
     public function contact(){
         return $this->render('contact');
     }
+
+
 
     public function product(){
         return $this->render('product');
