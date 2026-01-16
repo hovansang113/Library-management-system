@@ -133,9 +133,7 @@ WHERE BookID > 0
 
 
 
--- =========================
--- Tạo Trigger tự động thêm Book_Copy
--- =========================
+-- create trigger to auto-generate Book_Copy entries
 DELIMITER $$
 
 CREATE TRIGGER after_book_insert
@@ -152,9 +150,7 @@ END$$
 
 DELIMITER ;
 
--- =========================
--- Kiểm tra kết quả
--- =========================
+--check trigger by inserting a new book
 SELECT 
     b.BookID,
     b.Title,
@@ -171,7 +167,7 @@ GROUP BY b.BookID
 ORDER BY b.BookID;
 
 
--- Xem chi tiết Book_Copy
+-- View Details of Book Copies
 SELECT * FROM Book_Copy ORDER BY BookID, CopyID;
 
 SELECT * FROM Member;
