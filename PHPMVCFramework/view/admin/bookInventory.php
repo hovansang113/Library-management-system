@@ -142,7 +142,7 @@
     </div> <br></body>
 
     <div class="add-category-form">
-        <h2>Add New Category</h2>
+        <h2>Add New Category.</h2>
 
         <form id="formAddNewCategory" method="POST">
             <div class="form-group full-width">
