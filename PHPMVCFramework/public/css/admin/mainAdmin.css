@@ -1,0 +1,67 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.custom-navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee; 
+}
+
+.logo-img {
+    height: 70px;
+    width: auto;
+}
+
+.brand-info {
+    line-height: 1.2;
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: #000;
+}
+
+.brand-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.custom-menu .nav-link {
+    font-weight: 600;
+    color: #000 !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    font-size: 0.95rem;
+}
+
+.custom-menu .nav-link:hover {
+    color: #007bff !important; 
+}
+
+.logout-link {
+    text-decoration: none;
+    color: #313ef1;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.logout-link:hover {
+    color: #dc3545; 
+}
+
+
+@media (max-width: 991px) {
+    .custom-menu {
+        margin-top: 15px;
+    }
+    .logout-link {
+        margin-top: 15px;
+    }
+}

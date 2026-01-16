@@ -1,0 +1,557 @@
+/* ============ HEADER STYLES ============ */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.custom-navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee; 
+}
+
+.logo-img {
+    height: 70px;
+    width: auto;
+}
+
+.brand-info {
+    line-height: 1.2;
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: #000;
+}
+
+.brand-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.custom-menu .nav-link {
+    font-weight: 600;
+    color: #000 !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    font-size: 0.95rem;
+}
+
+.custom-menu .nav-link:hover {
+    color: #007bff !important; 
+}
+
+.logout-link {
+    text-decoration: none;
+    color: #313ef1;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.logout-link:hover {
+    color: #dc3545; 
+}
+
+
+@media (max-width: 991px) {
+    .custom-menu {
+        margin-top: 15px;
+    }
+    .logout-link {
+        margin-top: 15px;
+    }
+}
+
+
+/* ========== BOOK INVENTORY PAGE STYLES ========== */
+.app-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.sidebar {
+    width: 280px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-icon-add {
+    background: #eaf2ff;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #2563eb;
+}
+
+.btn-icon-add:hover {
+    background: #dbeafe;
+}
+
+/* Category list */
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.category-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    display: flex;
+    align-items: center;
+    
+    
+}
+.category-card.btn-icon-edit,
+.category-card.btn-icon-delete {
+    margin-right: 8px;
+    color: #476eed;
+}
+
+.category-card:hover {
+    background: #f9fafb;
+}
+
+.category-card.active {
+    border-color: #2563eb;
+    background: #eef4ff;
+}
+
+.category-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.category-card .count {
+    font-size: 12px;
+    color: #6b7280;
+}
+.space{
+    margin-right: 90px;
+}
+
+.category-card .desc {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+/* Sidebar footer */
+.alert-box {
+    margin-top: auto;
+    background: #eef4ff;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 12px;
+    color: #1e3a8a;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+/* Top bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.search-box input {
+    padding: 8px 12px 8px 32px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #2563eb;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+/* ========== TABLE ========== */
+.table-container {
+    margin-top: 12px;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background: #f9fafb;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table td {
+    padding: 12px;
+    font-size: 13px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Status & quantity */
+.text-green {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.btn-icon-edit,
+.btn-icon-delete {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.btn-icon-edit {
+    color: #2563eb;
+}
+
+.btn-icon-delete {
+    color: #dc2626;
+}
+
+.btn-icon-edit:hover {
+    color: #1d4ed8;
+}
+
+.btn-icon-delete:hover {
+    color: #b91c1c;
+}
+
+
+
+/* =============== FORM THÊM SÁCH MỚI MODAL =============== */
+/* ========== MODAL CONTAINER ========== */
+.modal-content.add-book-form {
+    width: 520px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Title */
+.add-book-form h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.add-book-form h2 + p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+/* ========== FORM LAYOUT ========== */
+#formAddNewBook {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full-width {
+    flex: 1;
+}
+
+/* Inputs */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    height: 44px;
+    box-sizing: border-box;
+    background: #f3f4f6;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+/* Remove number spinner */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Inputs & textarea */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background: #f3f4f6;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    background: #ffffff;
+    border-color: #2563eb;
+}
+
+/* Textarea */
+.form-group textarea {
+    resize: none;
+}
+
+/* ========== SELECT CUSTOM ========== */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.select-wrapper i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #6b7280;
+    pointer-events: none;
+}
+
+/* ========== FILE INPUT ========== */
+.form-group input[type="file"] {
+    background: #f3f4f6;
+    padding: 8px;
+}
+
+/* ========== IMAGE PREVIEW ========== */
+#imagePreview img {
+    border: 1px solid #e5e7eb;
+    padding: 4px;
+    background: #ffffff;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-save {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background: #1d4ed8;
+}
+
+.btn-exit {
+    background: #ffffff;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-exit:hover {
+    background: #f9fafb;
+}
+
+/* ========== ADD CATEGORY MODAL ========== */
+.add-category-form {
+    width: 420px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Title */
+.add-category-form h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+/* Form layout */
+#formAddNewCategory {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Form group */
+.add-category-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.add-category-form .form-group.full-width {
+    width: 100%;
+}
+
+/* Label */
+.add-category-form label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* Input */
+.add-category-form input[type="text"] {
+    height: 44px;
+    background: #f3f4f6;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.add-category-form input::placeholder {
+    color: #9ca3af;
+}
+
+/* Focus */
+.add-category-form input:focus {
+    background: #ffffff;
+    border-color: #2563eb;
+}
+
