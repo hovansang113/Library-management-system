@@ -4,7 +4,7 @@
 <form action="/register" method="post">
     <div class="form-group">
         <label>FisrtName</label>
-        <input type="text" name="fisrtName" class="form-control">
+        <input type="text" name="firstname" class="form-control">
     </div>
     <div class="form-group">
         <label>LastName</label>
@@ -20,7 +20,7 @@
     </div>
     <div class="form-group">
         <label>Password Repeat</label>
-        <input type="password" name="confirmPassword" class="form-control"> <!-- sửa name ở đây -->
+        <input type="password" name="passwordConfirm" class="form-control"> <!-- sửa name ở đây -->
     </div>
     <div class="form-group form-check">
         <input type="checkbox" name="agree" class="form-check-input" id="exampleCheck1">
