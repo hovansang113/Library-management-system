@@ -27,13 +27,15 @@ class SiteController extends Controller{
 
     public function bookProcess(){
         Middleware::checkAdmin();
-
+        $bookModel = new \App\model\BookModel();
         $categoryModel = new \App\model\CategoryModel();
         $categories = $categoryModel->getAllCategories();
+        $books = $bookModel->getAllBooks();
 
         $this->setLayout('admin/mainAdmin');
-        return $this->render('admin/bookInventory', [
+        return $this->render('admin/BookInventory', [
             'categories' => $categories
+            ,'books' => $books
         ]);
     }
 

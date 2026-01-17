@@ -10,7 +10,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\core\Application;
 use App\controllers\SiteController;
 use App\controllers\AuthController;
-use App\controllers\CategoryController;
+use App\controllers\BookInventory;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -39,10 +39,16 @@ $app->router->post('/Login', [AuthController::class, 'processLogin']);
 
 // Site Admin pages
 // Book Inventory page
-$app->router->get('/admin/bookInventory', [CategoryController::class, 'showCategories']);
-$app->router->post('/admin/addCategory', [CategoryController::class, 'addCategory']);
-$app->router->post('/admin/deleteCategory', [CategoryController::class, 'deleteCategory']);
-$app->router->post('/admin/updateCategory', [CategoryController::class, 'updateCategory']);
+$app->router->get('/admin/bookInventory', [BookInventory::class, 'showCategories']);
+$app->router->post('/admin/addCategory', [BookInventory::class, 'addCategory']);
+$app->router->post('/admin/deleteCategory', [BookInventory::class, 'deleteCategory']);
+$app->router->post('/admin/updateCategory', [BookInventory::class, 'updateCategory']);
+
+// add new book
+$app->router->post('/admin/addBook', [BookInventory::class, 'addBook']);
+$app->router->post('/admin/updateBook', [BookInventory::class, 'updateBook']);
+$app->router->post('/admin/deleteBook', [BookInventory::class, 'deleteBook']);
+$app->router->post('/admin/searchBooks', [BookInventory::class, 'searchBooks']);
 $app->run();
 
 

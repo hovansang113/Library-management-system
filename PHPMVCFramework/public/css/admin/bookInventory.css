@@ -68,7 +68,7 @@ body {
 }
 
 
-/* ========== BOOK INVENTORY PAGE STYLES ========== */
+
 .app-container {
     display: flex;
     gap: 20px;
@@ -133,6 +133,11 @@ body {
     
     
 }
+
+.space{
+    width: 300px;
+}
+
 .category-card.btn-icon-edit,
 .category-card.btn-icon-delete {
     margin-right: 8px;
@@ -271,8 +276,8 @@ body {
 }
 
 .data-table td {
-    padding: 12px;
-    font-size: 13px;
+    padding: 9px;
+    font-size: 15px;
     border-bottom: 1px solid #e5e7eb;
 }
 
@@ -553,4 +558,23 @@ input[type="number"] {
 .add-category-form input:focus {
     background: #ffffff;
     border-color: #2563eb;
+}
+
+.add-book-form,
+.add-category-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
 }

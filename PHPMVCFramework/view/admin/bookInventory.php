@@ -48,7 +48,7 @@
                 <div class="actions">
                     <div class="search-box">
                         <i class="fa-solid fa-search"></i>
-                        <input type="text" placeholder="Tìm kiếm sách...">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm sách...">
                     </div>
                     <button class="btn-primary">
                         <i class="fa-solid fa-plus"></i> Thêm sách
@@ -67,25 +67,48 @@
                             <th>Description</th>
                             <th>Quantity</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Dac Nhan Tam</td>
-                            <td>Ho Van A</td>
-                            <td>Tam Ly</td>
-                            <td>The book talk about life</td>
-                            <td class="text-green">7</td>
-                            <td>Available</td>
-                            <td>
-                                <button class="btn-icon-edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                                <button class="btn-icon-delete"><i class="fa-regular fa-trash-can"></i></button>
-                            </td>
-                        </tr>
+                        <?php if (!empty($books)): ?>
+                            <?php foreach ($books as $index => $book): ?>
+                                <tr>
+                                    <td><?= $index + 1 ?></td>
+                                    <td><?= htmlspecialchars($book['Title']) ?></td>
+                                    <td><?= htmlspecialchars($book['Author']) ?></td>
+                                    <td><?= htmlspecialchars($book['CategoryName']) ?></td>
+                                    <td><?= htmlspecialchars($book['Description']) ?></td>
+                                    <td class="text-green"><?= $book['Quantity'] ?></td>
+                                    <td><?= $book['Status'] ?></td>
+                                    <td>
+                                        <button 
+                                            class="btn-icon-edit"
+                                            data-id="<?= $book['BookID'] ?>">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
 
+                                    <form method="post" action="/admin/deleteBook"
+                                        onsubmit="return confirm('Bạn có chắc muốn xóa sách này không?');"
+                                        style="display:inline;">
 
+                                        <input type="hidden" name="id" value="<?= $book['BookID'] ?>">
+
+                                        <button type="submit" class="btn-icon-delete">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </form>
+
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="8" style="text-align:center;">Chưa có sách nào</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
+
                 </table>
             </div>
         </main>
@@ -93,26 +116,31 @@
     </div>
 
     <div class="modal-content add-book-form" id="addBookForm" style="display: none;">
-        <h2>Add New Book</h2>
+        <h2 id="bookFormTitle">Add New Book</h2>
 
-        <form id="formAddNewBook" method="POST" enctype="multipart/form-data">
+        <form id="formAddNewBook" method="POST" action="/admin/addBook" enctype="multipart/form-data">
+            <input type="hidden" id="bookId" name="BookID" value="">
             <div class="form-group full-width">
                 <label for="bookName">Name</label>
-                <input type="text" id="bookName" name="bookName" placeholder="Đắc Nhân Tâm" required>
+                <input type="text" id="bookName" name="Title" placeholder="Đắc Nhân Tâm" required>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input type="text" id="author" name="author" placeholder="Dale Carnegie" required>
+                    <input type="text" id="author" name="Author" placeholder="Dale Carnegie" required>
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
                     <div class="select-wrapper">
-                        <select id="category" name="category" required>
-                            <option value="" disabled selected>Education & Knowledge</option>
-                            <option value="skills">Kỹ năng sống</option>
-                            <option value="novel">Tiểu thuyết</option>
+                        <select id="category" name="CategoryID" required>
+                        <option value="" disabled selected>Chọn danh mục</option>
+
+                        <?php foreach ($categories as $cat): ?>
+                            <option value="<?= $cat['CategoryID'] ?>">
+                                <?= htmlspecialchars($cat['CategoryName']) ?>
+                            </option>
+                        <?php endforeach; ?>
                         </select>
                         <i class="fa-solid fa-arrow-down"></i>
                     </div>
@@ -122,26 +150,27 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="bookImage">Image</label>
-                    <input type="file" id="bookImage" name="bookImage" accept="image/*" required>
+                    <input type="file" id="bookImage" name="Image" accept="image/*">
                     
                     <div id="imagePreview" style="margin-top: 10px; display: none;">
                         <img id="previewImg" src="" alt="Preview" style="max-width: 150px; max-height: 150px; border-radius: 5px;">
                     </div>
+                    <small id="imageNote" style="color: #999;">Bỏ trống nếu không muốn thay đổi ảnh</small>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" name="quantity" placeholder="50" required>
+                    <input type="number" id="quantity" name="Quantity" placeholder="50" required>
                 </div>
             </div>
 
             <div class="form-group full-width">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" placeholder="This book helps you overcome your fears and inner barriers..." required></textarea>
+                <textarea id="description" name="Description" rows="4" placeholder="This book helps you overcome your fears and inner barriers..." required></textarea>
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn-save">Save</button>
-                <button type="button" class="btn-exit" onclick="closeModal()">Exit</button>
+                <button type="submit" class="btn-save" id="bookSubmitBtn">Save</button>
+                <button type="button" class="btn-exit" onclick="resetBookForm()">Exit</button>
             </div>
         </form>
     </div> <br>
