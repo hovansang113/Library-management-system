@@ -13,3 +13,4 @@ document.addEventListener("DOMContentLoaded", function () {
     track.style.transform = `translateX(-${index * 100}%)`;
   }, 2000);
 });
+

@@ -26,11 +26,17 @@ class SiteController extends Controller{
     }
 
     public function bookProcess(){
-        $this->setLayout('admin/mainAdmin');
         Middleware::checkAdmin();
-        return $this->render('admin/bookInventory');
 
+        $categoryModel = new \App\model\CategoryModel();
+        $categories = $categoryModel->getAllCategories();
+
+        $this->setLayout('admin/mainAdmin');
+        return $this->render('admin/bookInventory', [
+            'categories' => $categories
+        ]);
     }
+
 
     public function handleContact(Request $request){
         $body = Application::$app->request->getBody();

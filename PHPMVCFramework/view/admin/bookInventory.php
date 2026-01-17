@@ -19,12 +19,17 @@
             </div>
 
             <div class="category-list">
-                <div class="category-card active">
-                    <h4 class="space">Kỹ năng sống</h4>
-                    <button class="btn-icon-edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                    <button class="btn-icon-delete"><i class="fa-regular fa-trash-can"></i></button>
-                </div>
-
+                <?php if (!empty($categories)): ?>
+                    <?php foreach ($categories as $category): ?>
+                        <div class="category-card">
+                            <h4 class="space"><?= htmlspecialchars($category['CategoryName']) ?></h4>
+                            <button class="btn-icon-edit" type="button" onclick="editCategory(<?= $category['CategoryID'] ?>, '<?= htmlspecialchars($category['CategoryName']) ?>')"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button class="btn-icon-delete" type="button" onclick="deleteCategory(<?= $category['CategoryID'] ?>)"><i class="fa-regular fa-trash-can"></i></button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p style="padding: 10px; color: #999;">Chưa có danh mục nào</p>
+                <?php endif; ?>
             </div>
 
             <div class="sidebar-footer alert-box">
@@ -87,7 +92,7 @@
 
     </div>
 
-    <div class="modal-content add-book-form">
+    <div class="modal-content add-book-form" id="addBookForm" style="display: none;">
         <h2>Add New Book</h2>
 
         <form id="formAddNewBook" method="POST" enctype="multipart/form-data">
@@ -139,22 +144,28 @@
                 <button type="button" class="btn-exit" onclick="closeModal()">Exit</button>
             </div>
         </form>
-    </div> <br></body>
+    </div> <br>
 
-    <div class="add-category-form">
-        <h2>Add New Category.</h2>
+    <div class="overlay" id="overlay"></div>
 
-        <form id="formAddNewCategory" method="POST">
+    <div class="add-category-form" id="addCategoryForm" style="display: none;">
+        <h2 id="categoryFormTitle">Add New Category</h2>
+
+        <form id="formAddNewCategory" method="POST" action="/admin/addCategory">
+            <input type="hidden" id="categoryId" name="id" value="">
             <div class="form-group full-width">
                 <label for="categoryName">Category Name</label>
-                <input type="text" id="categoryName" placeholder="Kỹ năng sống">
+                <input type="text" id="categoryName" name="CategoryName" placeholder="Kỹ năng sống" required>
             </div>
          <div class="form-actions">
-                <button type="submit" class="btn-save">Save</button>
-                <button type="button" class="btn-exit" onclick="closeModal()">Exit</button>
+                <button type="submit" class="btn-save" id="categorySubmitBtn">Save</button>
+                <button type="button" class="btn-exit" onclick="resetCategoryForm()">Cancel</button>
             </div>
         </form>
+    </div>
 
+
+    <script src="/js/admin/bookInventory.js"></script>
 </body>
 
 </html>
