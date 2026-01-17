@@ -9,7 +9,7 @@ use App\model\UserModel;
 class AuthController extends Controller
 {
 
-    // Hiển thị form login
+    
     public function login()
     {
         return $this->render('login');
@@ -62,5 +62,13 @@ class AuthController extends Controller
         }
 
         return $this->render('login', ['errors' => $errors]);
+    }
+    
+
+    public function logout()
+    {
+        session_destroy();
+        header('Location: /');
+        exit;
     }
 }

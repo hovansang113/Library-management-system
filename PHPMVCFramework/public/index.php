@@ -49,6 +49,13 @@ $app->router->post('/admin/addBook', [BookInventory::class, 'addBook']);
 $app->router->post('/admin/updateBook', [BookInventory::class, 'updateBook']);
 $app->router->post('/admin/deleteBook', [BookInventory::class, 'deleteBook']);
 $app->router->post('/admin/searchBooks', [BookInventory::class, 'searchBooks']);
+
+
+$app->router->get('/admin/memberManagement', [SiteController::class, 'memberManagement']);
+
+// Logout
+$app->router->get('/logout', [AuthController::class, 'logout']);
+
 $app->run();
 
 
