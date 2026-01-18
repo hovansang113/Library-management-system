@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý sách</title>
+    <title>Book Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/admin/bookInventory.css">
 </head>
@@ -14,7 +14,7 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h3><i class="fa-regular fa-folder"></i>Category</h3>
+                <h3><i class="fa-regular fa-folder"></i> Categories</h3>
                 <button class="btn-icon-add"><i class="fa-solid fa-plus"></i></button>
             </div>
 
@@ -23,8 +23,14 @@
                     <?php foreach ($categories as $category): ?>
                         <div class="category-card">
                             <h4 class="space"><?= htmlspecialchars($category['CategoryName']) ?></h4>
-                            <button class="btn-icon-edit" type="button" onclick="editCategory(<?= $category['CategoryID'] ?>, '<?= htmlspecialchars($category['CategoryName']) ?>')"><i class="fa-regular fa-pen-to-square"></i></button>
-                            <button class="btn-icon-delete" type="button" onclick="deleteCategory(<?= $category['CategoryID'] ?>)"><i class="fa-regular fa-trash-can"></i></button>
+                            <button class="btn-icon-edit" type="button"
+                                onclick="editCategory(<?= $category['CategoryID'] ?>, '<?= htmlspecialchars($category['CategoryName']) ?>')">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn-icon-delete" type="button"
+                                onclick="deleteCategory(<?= $category['CategoryID'] ?>)">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -33,22 +39,21 @@
             </div>
 
             <div class="sidebar-footer alert-box">
-                <strong>Note:</strong>You must create a catalog before adding books.
+                <strong>Note:</strong> You must create a category before adding books.
             </div>
         </aside>
-
 
         <main class="main-content">
 
             <header class="top-bar">
                 <div class="page-title">
-                    <i class="fa-solid fa-book-open"></i>Book management
+                    <i class="fa-solid fa-book-open"></i> Book Management
                 </div>
 
                 <div class="actions">
                     <div class="search-box">
                         <i class="fa-solid fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Tìm kiếm sách...">
+                        <input type="text" id="searchInput" placeholder="Search books...">
                     </div>
                     <button class="btn-primary">
                         <i class="fa-solid fa-plus"></i> Add Book
@@ -82,23 +87,18 @@
                                     <td class="text-green"><?= $book['Quantity'] ?></td>
                                     <td><?= $book['Status'] ?></td>
                                     <td>
-                                        <button 
-                                            class="btn-icon-edit"
-                                            data-id="<?= $book['BookID'] ?>">
+                                        <button class="btn-icon-edit" data-id="<?= $book['BookID'] ?>">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </button>
 
-                                    <form method="post" action="/admin/deleteBook"
-                                        onsubmit="return confirm('Bạn có chắc muốn xóa sách này không?');"
-                                        style="display:inline;">
-
-                                        <input type="hidden" name="id" value="<?= $book['BookID'] ?>">
-
-                                        <button type="submit" class="btn-icon-delete">
-                                            <i class="fa-regular fa-trash-can"></i>
-                                        </button>
-                                    </form>
-
+                                        <form method="post" action="/admin/deleteBook"
+                                            onsubmit="return confirm('Are you sure you want to delete this book?');"
+                                            style="display:inline;">
+                                            <input type="hidden" name="id" value="<?= $book['BookID'] ?>">
+                                            <button type="submit" class="btn-icon-delete">
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -108,11 +108,9 @@
                             </tr>
                         <?php endif; ?>
                     </tbody>
-
                 </table>
             </div>
         </main>
-
     </div>
 
     <div class="modal-content add-book-form" id="addBookForm" style="display: none;">
@@ -120,9 +118,11 @@
 
         <form id="formAddNewBook" method="POST" action="/admin/addBook" enctype="multipart/form-data">
             <input type="hidden" id="bookId" name="BookID" value="">
+
             <div class="form-group full-width">
-                <label for="bookName">Name</label>
-                <input type="text" id="bookName" name="Title" placeholder="Đắc Nhân Tâm" required>
+                <label for="bookName">Book Name</label>
+                <input type="text" id="bookName" name="Title"
+                    placeholder="How to Win Friends and Influence People" required>
             </div>
 
             <div class="form-row">
@@ -134,13 +134,12 @@
                     <label for="category">Category</label>
                     <div class="select-wrapper">
                         <select id="category" name="CategoryID" required>
-                        <option value="" disabled selected>Chọn danh mục</option>
-
-                        <?php foreach ($categories as $cat): ?>
-                            <option value="<?= $cat['CategoryID'] ?>">
-                                <?= htmlspecialchars($cat['CategoryName']) ?>
-                            </option>
-                        <?php endforeach; ?>
+                            <option value="" disabled selected>Select category</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?= $cat['CategoryID'] ?>">
+                                    <?= htmlspecialchars($cat['CategoryName']) ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                         <i class="fa-solid fa-arrow-down"></i>
                     </div>
@@ -151,11 +150,14 @@
                 <div class="form-group">
                     <label for="bookImage">Image</label>
                     <input type="file" id="bookImage" name="Image" accept="image/*">
-                    
+
                     <div id="imagePreview" style="margin-top: 10px; display: none;">
-                        <img id="previewImg" src="" alt="Preview" style="max-width: 150px; max-height: 150px; border-radius: 5px;">
+                        <img id="previewImg" src="" alt="Preview"
+                            style="max-width: 150px; max-height: 150px; border-radius: 5px;">
                     </div>
-                    <small id="imageNote" style="color: #999;">Bỏ trống nếu không muốn thay đổi ảnh</small>
+                    <small id="imageNote" style="color: #999;">
+                        Leave empty if you do not want to change the image
+                    </small>
                 </div>
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
@@ -165,7 +167,8 @@
 
             <div class="form-group full-width">
                 <label for="description">Description</label>
-                <textarea id="description" name="Description" rows="4" placeholder="This book helps you overcome your fears and inner barriers..." required></textarea>
+                <textarea id="description" name="Description" rows="4"
+                    placeholder="This book helps you overcome your fears and inner barriers..." required></textarea>
             </div>
 
             <div class="form-actions">
@@ -173,7 +176,7 @@
                 <button type="button" class="btn-exit" onclick="resetBookForm()">Exit</button>
             </div>
         </form>
-    </div> <br>
+    </div>
 
     <div class="overlay" id="overlay"></div>
 
@@ -184,15 +187,15 @@
             <input type="hidden" id="categoryId" name="id" value="">
             <div class="form-group full-width">
                 <label for="categoryName">Category Name</label>
-                <input type="text" id="categoryName" name="CategoryName" placeholder="Kỹ năng sống" required>
+                <input type="text" id="categoryName" name="CategoryName"
+                    placeholder="Life Skills" required>
             </div>
-         <div class="form-actions">
+            <div class="form-actions">
                 <button type="submit" class="btn-save" id="categorySubmitBtn">Save</button>
                 <button type="button" class="btn-exit" onclick="resetCategoryForm()">Cancel</button>
             </div>
         </form>
     </div>
-
 
     <script src="/js/admin/bookInventory.js"></script>
 </body>
