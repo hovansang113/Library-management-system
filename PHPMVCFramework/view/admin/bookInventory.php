@@ -14,7 +14,7 @@
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h3><i class="fa-regular fa-folder"></i> Danh mục</h3>
+                <h3><i class="fa-regular fa-folder"></i>Category</h3>
                 <button class="btn-icon-add"><i class="fa-solid fa-plus"></i></button>
             </div>
 
@@ -28,12 +28,12 @@
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="padding: 10px; color: #999;">Chưa có danh mục nào</p>
+                    <p style="padding: 10px; color: #999;">No categories yet.</p>
                 <?php endif; ?>
             </div>
 
             <div class="sidebar-footer alert-box">
-                <strong>Lưu ý:</strong> Phải tạo danh mục trước khi thêm sách.
+                <strong>Note:</strong>You must create a catalog before adding books.
             </div>
         </aside>
 
@@ -42,7 +42,7 @@
 
             <header class="top-bar">
                 <div class="page-title">
-                    <i class="fa-solid fa-book-open"></i> Quản lý sách
+                    <i class="fa-solid fa-book-open"></i>Book management
                 </div>
 
                 <div class="actions">
@@ -51,7 +51,7 @@
                         <input type="text" id="searchInput" placeholder="Tìm kiếm sách...">
                     </div>
                     <button class="btn-primary">
-                        <i class="fa-solid fa-plus"></i> Thêm sách
+                        <i class="fa-solid fa-plus"></i> Add Book
                     </button>
                 </div>
             </header>
@@ -104,7 +104,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="8" style="text-align:center;">Chưa có sách nào</td>
+                                <td colspan="8" style="text-align:center;">No books yet.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
