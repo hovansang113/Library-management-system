@@ -53,7 +53,7 @@
                                                 <i class="fa-solid fa-check-circle"></i> Unblock
                                             </button>
                                         </form>
-                                    <?php endif; ?>x
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
