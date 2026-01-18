@@ -11,6 +11,7 @@ use App\core\Application;
 use App\controllers\SiteController;
 use App\controllers\AuthController;
 use App\controllers\BookInventory;
+use App\controllers\UserController;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -33,7 +34,7 @@ $app->router->post('/contact', [SiteController::class, 'handleContact']);
 
 
 // Auth pages
-$app->router->get('/Login', [AuthController::class, 'Login']);
+$app->router->get('/Login', [AuthController::class, 'login']);
 $app->router->post('/Login', [AuthController::class, 'processLogin']);
 
 
@@ -51,7 +52,11 @@ $app->router->post('/admin/deleteBook', [BookInventory::class, 'deleteBook']);
 $app->router->post('/admin/searchBooks', [BookInventory::class, 'searchBooks']);
 
 
-$app->router->get('/admin/memberManagement', [SiteController::class, 'memberManagement']);
+// User Management
+$app->router->get('/admin/userManagement', [UserController::class, 'userManagement']);
+$app->router->post('/admin/saveUser', [UserController::class, 'saveUser']);
+$app->router->post('/admin/user/block', [UserController::class, 'blockUser']);
+$app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']);
 
 // Logout
 $app->router->get('/logout', [AuthController::class, 'logout']);

@@ -46,9 +46,5 @@ class SiteController extends Controller{
         return 'Handling submitted data';
     }
 
-    public function memberManagement(){
-        Middleware::checkAdmin();
-        $this->setLayout('admin/mainAdmin');
-        return $this->render('admin/memberManagement');
-    }
+
 }
