@@ -1,12 +1,17 @@
 <?php
 // public/index.php
+session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+
 require_once __DIR__ . '/../vendor/autoload.php';
 use App\core\Application;
 use App\controllers\SiteController;
 use App\controllers\AuthController;
+use App\controllers\BookInventory;
+use App\controllers\UserController;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -29,11 +34,32 @@ $app->router->post('/contact', [SiteController::class, 'handleContact']);
 
 
 // Auth pages
-$app->router->get('/Login', [AuthController::class, 'Login']);
+$app->router->get('/Login', [AuthController::class, 'login']);
 $app->router->post('/Login', [AuthController::class, 'processLogin']);
 
-$app->router->get('/register', [AuthController::class, 'register']);
-$app->router->post('/register', [AuthController::class, 'register']);
+
+// Site Admin pages
+// Book Inventory page
+$app->router->get('/admin/bookInventory', [BookInventory::class, 'showCategories']);
+$app->router->post('/admin/addCategory', [BookInventory::class, 'addCategory']);
+$app->router->post('/admin/deleteCategory', [BookInventory::class, 'deleteCategory']);
+$app->router->post('/admin/updateCategory', [BookInventory::class, 'updateCategory']);
+
+// add new book
+$app->router->post('/admin/addBook', [BookInventory::class, 'addBook']);
+$app->router->post('/admin/updateBook', [BookInventory::class, 'updateBook']);
+$app->router->post('/admin/deleteBook', [BookInventory::class, 'deleteBook']);
+$app->router->post('/admin/searchBooks', [BookInventory::class, 'searchBooks']);
+
+
+// User Management
+$app->router->get('/admin/userManagement', [UserController::class, 'userManagement']);
+$app->router->post('/admin/saveUser', [UserController::class, 'saveUser']);
+$app->router->post('/admin/user/block', [UserController::class, 'blockUser']);
+$app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']);
+
+// Logout
+$app->router->get('/logout', [AuthController::class, 'logout']);
 
 $app->run();
 

@@ -4,9 +4,11 @@ use App\core\Application;
 use App\core\Router;
 use App\core\Controller;
 use App\core\Request;
+use App\core\Middleware;
 
 class SiteController extends Controller{
     public function home(){
+ 
         $HomeModel = new \App\model\HomeModel();
         $letestBooks = $HomeModel->getLatestBooks(4);
         $params = [
@@ -15,17 +17,27 @@ class SiteController extends Controller{
         return $this->render('home', $params);
     }
 
-
     public function contact(){
         return $this->render('contact');
     }
-
-
 
     public function product(){
         return $this->render('product');
     }
 
+    public function bookProcess(){
+        Middleware::checkAdmin();
+        $bookModel = new \App\model\BookModel();
+        $categoryModel = new \App\model\CategoryModel();
+        $categories = $categoryModel->getAllCategories();
+        $books = $bookModel->getAllBooks();
+
+        $this->setLayout('admin/mainAdmin');
+        return $this->render('admin/BookInventory', [
+            'categories' => $categories
+            ,'books' => $books
+        ]);
+    }
 
 
     public function handleContact(Request $request){
@@ -33,4 +45,6 @@ class SiteController extends Controller{
 
         return 'Handling submitted data';
     }
+
+
 }
