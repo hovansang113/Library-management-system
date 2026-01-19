@@ -1,4 +1,3 @@
--- Active: 1768190017597@@127.0.0.1@3306@library_db
 -- =========================
 -- Create Database
 -- =========================
@@ -132,8 +131,13 @@ WHERE BookID > 0
   AND Image NOT LIKE '/%';
 
 
+UPDATE Member
+SET Role = "Admin"
+WHERE MemberID = 1;
 
--- create trigger to auto-generate Book_Copy entries
+-- =========================
+-- Tạo Trigger tự động thêm Book_Copy
+-- =========================
 DELIMITER $$
 
 CREATE TRIGGER after_book_insert
@@ -150,7 +154,9 @@ END$$
 
 DELIMITER ;
 
---check trigger by inserting a new book
+-- =========================
+-- Kiểm tra kết quả
+-- =========================
 SELECT 
     b.BookID,
     b.Title,
@@ -166,8 +172,25 @@ LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
 GROUP BY b.BookID
 ORDER BY b.BookID;
 
+-- Thêm tài khoản Admin để test
+-- Username: admin
+-- Email: admin@gmail.com  
+-- Password: admin123
+INSERT INTO Member (UserName, Phone, Email, RegisterDate, Password, Status, Role) 
+VALUES (
+    'Admin', 
+    '0987654321', 
+    'admin@gmail.com', 
+    CURDATE(), 
+    '$2y$10$5O3kKvDEqYW5kXiXXhGO4eqC5XjXxHxHxHxHxHxHxHxHxHxHxHxHxu', 
+    'Active', 
+    'Admin'
+);
+UPDATE Member
+SET Role = 'User'
+WHERE MemberID >= 3;
 
--- View Details of Book Copies
+-- Xem chi tiết Book_Copy
 SELECT * FROM Book_Copy ORDER BY BookID, CopyID;
 
 SELECT * FROM Member;
