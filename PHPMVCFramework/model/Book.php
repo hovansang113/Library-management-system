@@ -29,25 +29,17 @@ class Book {
     }
 
      public function getAllBooks() {
-        $sql = "
-            SELECT 
-                b.BookID,
-                b.Title,
-                b.Author,
-                c.CategoryName,
-                b.Description,
-                b.Quantity,
-                CASE 
-                    WHEN SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) > 0 
-                    THEN 'Available'
-                    ELSE 'Borrowed'
-                END AS Status
-            FROM Book b
-            JOIN Category c ON b.CategoryID = c.CategoryID
-            LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
-            GROUP BY b.BookID
-            ORDER BY b.BookID
-        ";
+     $sql = "SELECT 
+                    b.BookID, b.Title, b.Author, b.Image, b.Description, c.CategoryName as Category, b.Quantity,
+                    bc.Status,
+                    SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) as AvailableCopies
+                FROM Book b
+                INNER JOIN Category c on b.CategoryID = c.CategoryID
+                LEFT JOIN Book_Copy bc on b.BookID = bc.BookID
+                GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
+                ORDER BY b.BookID DESC
+                
+         ";
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
@@ -61,20 +53,16 @@ class Book {
                 b.BookID,
                 b.Title,
                 b.Author,
-                c.CategoryName,
-                b.Description,
+                b.Image,
+                c.CategoryName AS Category,
                 b.Quantity,
-                CASE 
-                    WHEN SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) > 0 
-                    THEN 'Available'
-                    ELSE 'Borrowed'
-                END AS Status
+                SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) AS AvailableCopies
             FROM Book b
             JOIN Category c ON b.CategoryID = c.CategoryID
             LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
-            WHERE b.Title LIKE :keyword OR b.Author LIKE :keyword
-            GROUP BY b.BookID
-            ORDER BY b.BookID
+            WHERE b.Title LIKE :keyword 
+            GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
+            ORDER BY b.BookID DESC
         ";
 
         $stmt = $this->db->prepare($sql);

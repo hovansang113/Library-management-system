@@ -39,6 +39,30 @@ class SiteController extends Controller{
         ]);
     }
 
+    public function catalog(){
+        $Book= new \App\model\Book();
+        $books = $Book->getAllBooks();
+        $params = [
+            'books' => $books
+        ];
+        return $this->render('catalog', $params);
+    }
+
+    public function searchBooks(Request $request){
+
+        $keyword = $request->getBody()['keyword'] ?? '';
+        
+        if (empty($keyword)) {
+            return json_encode(['books' => []]);
+        }
+
+        $bookModel = new \App\model\Book();
+        $books = $bookModel->searchBooks($keyword);
+
+        header('Content-Type: application/json');
+        return json_encode(['books' => $books]);
+    }
+    
 
     public function handleContact(Request $request){
         $body = Application::$app->request->getBody();
