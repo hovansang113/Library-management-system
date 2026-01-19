@@ -136,7 +136,6 @@ function resetCategoryForm() {
     document.getElementById('overlay').style.display = 'none';
 }
 
-// Xử lý tìm kiếm sách
 const searchInput = document.getElementById('searchInput');
 let searchTimeout;
 
@@ -146,7 +145,6 @@ if (searchInput) {
         const keyword = this.value.trim();
 
         if (keyword.length === 0) {
-            // Nếu rỗng, tải lại trang
             location.reload();
             return;
         }
@@ -162,7 +160,6 @@ if (searchInput) {
             })
             .then(response => response.json())
             .then(data => {
-                // Cập nhật bảng dữ liệu
                 updateBooksTable(data.books);
             })
             .catch(error => console.error('Error:', error));
@@ -281,5 +278,4 @@ function handleDeleteClick(event) {
     }
 }
 
-// Gắn event listeners cho nút edit/delete khi trang load
 attachEditDeleteListeners();
