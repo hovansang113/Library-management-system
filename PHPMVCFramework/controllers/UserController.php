@@ -1,9 +1,8 @@
 <?php
 namespace App\controllers;
-
 use App\core\Controller;
 use App\core\Request;
-use App\model\UserManagementModel;
+use App\model\User;
 
 class UserController extends Controller
 {
@@ -12,7 +11,7 @@ class UserController extends Controller
     public function __construct()
     {
       
-        $this->userModel = new UserManagementModel();
+        $this->userModel = new User();
     }
 
     public function userManagement()

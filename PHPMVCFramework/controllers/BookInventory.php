@@ -3,18 +3,18 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\core\Request;
-use App\model\CategoryModel;
+use App\model\Category;
 
 class BookInventory extends Controller
 {
     
     public function showCategories()
     {
-        $categoryModel = new CategoryModel();
+        $categoryModel = new Category();
         $categories = $categoryModel->getAllCategories();
 
-        // Lấy cả books
-        $bookModel = new \App\model\BookModel();
+        
+        $bookModel = new \App\model\Book();
         $books = $bookModel->getAllBooks();
 
         $this->setLayout('admin/mainAdmin');
@@ -32,7 +32,7 @@ class BookInventory extends Controller
 
             try {
                 if (!empty($categoryName)) {
-                    $model = new CategoryModel();
+                    $model = new Category();
                     $model->createCategory($categoryName);
                     $_SESSION['success'] = 'Danh mục đã được tạo thành công!';
                 } else {
@@ -58,7 +58,7 @@ class BookInventory extends Controller
         if ($id) {
             try {
 
-                $model = new CategoryModel();
+                $model = new Category();
                 $model->deleteCategory($id);
                         
             } catch (\PDOException $e) {
@@ -80,7 +80,7 @@ class BookInventory extends Controller
 
             try {
                 if (!empty($id) && !empty($name)) {
-                    $model = new CategoryModel();
+                    $model = new Category();
                     $model->updateCategory($id, $name);
                     $_SESSION['success'] = 'Danh mục đã được cập nhật thành công!';
                 } else {
@@ -133,7 +133,7 @@ class BookInventory extends Controller
                 if (move_uploaded_file($fileTmpName, $uploadPath)) {
                   
                     $data['Image'] = '/img/homepage/item/' . $newFileName;
-                    $bookModel = new \App\model\BookModel();
+                    $bookModel = new \App\model\Book();
                     $bookModel->createBook($data);
                     $_SESSION['success'] = 'Sách đã được thêm thành công!';
                 } else {
@@ -154,7 +154,7 @@ class BookInventory extends Controller
 
         if ($id) {
             try {
-                $model = new \App\model\BookModel();
+                $model = new \App\model\Book();
                 $result = $model->deleteBook($id);
 
                 if (!$result['success']) {
@@ -184,7 +184,7 @@ class BookInventory extends Controller
                 exit;
             }
 
-            $bookModel = new \App\model\BookModel();
+            $bookModel = new \App\model\Book();
 
             // Xử lý upload file ảnh nếu có
             if (isset($_FILES['Image']) && $_FILES['Image']['error'] === UPLOAD_ERR_OK) {
@@ -241,7 +241,7 @@ class BookInventory extends Controller
             return json_encode(['books' => []]);
         }
 
-        $bookModel = new \App\model\BookModel();
+        $bookModel = new \App\model\Book();
         $books = $bookModel->searchBooks($keyword);
 
         header('Content-Type: application/json');

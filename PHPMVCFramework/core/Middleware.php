@@ -21,7 +21,6 @@ class Middleware {
 
     public static function checkUser() {
         self::checkLogin();
-
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'User') {
             header('Location: /');
             exit;

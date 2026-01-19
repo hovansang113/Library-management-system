@@ -9,7 +9,7 @@ use App\core\Middleware;
 class SiteController extends Controller{
     public function home(){
  
-        $HomeModel = new \App\model\HomeModel();
+        $HomeModel = new \App\model\Book();
         $letestBooks = $HomeModel->getLatestBooks(4);
         $params = [
             'books' => $letestBooks
@@ -27,8 +27,8 @@ class SiteController extends Controller{
 
     public function bookProcess(){
         Middleware::checkAdmin();
-        $bookModel = new \App\model\BookModel();
-        $categoryModel = new \App\model\CategoryModel();
+        $bookModel = new \App\model\Book();
+        $categoryModel = new \App\model\Category();
         $categories = $categoryModel->getAllCategories();
         $books = $bookModel->getAllBooks();
 

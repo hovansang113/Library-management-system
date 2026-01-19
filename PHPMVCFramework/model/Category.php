@@ -2,7 +2,7 @@
 namespace App\model;
 use PDO;
 
-class CategoryModel {
+class Category {
     private $db;
 
     function __construct() {

@@ -4,7 +4,7 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\core\Request;
-use App\model\UserModel;
+use App\model\User;
 
 class AuthController extends Controller
 {
@@ -35,7 +35,7 @@ class AuthController extends Controller
             }
 
             if (empty($errors)) {
-                $userModel = new UserModel();
+                $userModel = new User();
                 $user = $userModel->verifyUser($email, $password);
 
                 if ($user) {
@@ -43,10 +43,7 @@ class AuthController extends Controller
                     $_SESSION['user_email'] = $user['Email'];
                     $_SESSION['user_name'] = $user['UserName'];
                     $_SESSION['user_role'] = $user['Role'];
-                    // echo '<pre>';
-                    // var_dump($_SESSION);
-                    // echo '</pre>';
-                    // die();
+
 
 
                     if ($user['Role'] === 'Admin') {

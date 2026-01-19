@@ -3,12 +3,36 @@
 namespace App\model;
 use PDO;
 
-class UserManagementModel {
+class User {
     private $db;
 
     public function __construct() {
         $this->db = \App\core\Database::getInstance();
     }
+    public function verifyUser(string $email, string $password) {
+        try {
+            $sql = "SELECT * FROM Member WHERE Email = :email"; 
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([':email' => $email]);
+            
+            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+            
+            if (!$user || !password_verify($password, $user['Password'])) {
+                return false;
+            }
+            
+            if (isset($user['Status']) && $user['Status'] !== 'Active') {
+                return false; 
+            }
+            
+            return $user;
+            
+        } catch (\PDOException $e) {
+            error_log("Login error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
 
     public function getAllUsers() {
         $sql = "SELECT * FROM Member 
