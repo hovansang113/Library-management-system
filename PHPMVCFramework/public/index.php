@@ -64,6 +64,7 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 //catelog
 $app->router->get('/catalog', [SiteController::class, 'catalog']);
 $app->router->post('/user/searchBooks', [SiteController::class, 'searchBooks']);
+$app->router->get('/book', [SiteController::class, 'bookDetail']);
 $app->run();
 
 

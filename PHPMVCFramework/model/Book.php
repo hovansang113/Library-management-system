@@ -150,6 +150,62 @@ class Book {
             'message' => 'Xóa sách thất bại.'
         ];
     }
+    public function getAllAuthors(){
+        $sql = "SELECT DISTINCT Author FROM Book WHERE Author IS NOT NULL";
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function filterBooks($category, $author){
+        $sql = "SELECT 
+                b.BookID,
+                b.Title,
+                b.Author,
+                b.Image,
+                b.Quantity,
+                c.CategoryName AS Category,
+                SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) AS AvailableCopies
+            FROM Book b
+            JOIN Category c ON b.CategoryID = c.CategoryID
+            LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
+            WHERE 1";
+
+        $params = [];
+
+        if (!empty($category)) {
+            $sql .= " AND b.CategoryID = :category";
+            $params[':category'] = $category;
+        }
+
+        if (!empty($author)) {
+            $sql .= " AND b.Author = :author";
+            $params[':author'] = $author;
+        }
+
+        $sql .= " GROUP BY b.BookID, b.Title, b.Author, b.Image, b.Quantity, c.CategoryName";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getBookById($id) {
+        $sql = "SELECT 
+                    b.BookID, b.Title, b.Author, b.Image, b.Description, c.CategoryName as Category, b.Quantity,
+                    bc.Status,
+                    SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) as AvailableCopies
+                FROM Book b
+                INNER JOIN Category c on b.CategoryID = c.CategoryID
+                LEFT JOIN Book_Copy bc on b.BookID = bc.BookID
+                WHERE b.BookID = :id
+                GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
+         ";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
 
 
 }

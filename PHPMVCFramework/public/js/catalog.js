@@ -112,3 +112,11 @@ function updateBooksTable(books) {
         `;
     });
 }
+
+document.getElementById('categorySelect').addEventListener('change', function() {
+    document.getElementById('filterForm').submit();
+});
+
+document.getElementById('authorSelect').addEventListener('change', function() {
+    document.getElementById('filterForm').submit();
+});
