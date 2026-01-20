@@ -32,7 +32,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/bookInventory">Book Management</a></li>
                     <li class="nav-item"><a class="nav-link" href="/admin/userManagement">User Management</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Borrowing and Returning Management</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/loanManagement">Borrowing and Returning Management</a></li>
                 </ul>
 
                 <div class="ms-auto">

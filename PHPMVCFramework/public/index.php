@@ -12,6 +12,7 @@ use App\controllers\SiteController;
 use App\controllers\AuthController;
 use App\controllers\BookInventory;
 use App\controllers\UserController;
+use App\controllers\LoanController;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -58,6 +59,9 @@ $app->router->post('/admin/saveUser', [UserController::class, 'saveUser']);
 $app->router->post('/admin/user/block', [UserController::class, 'blockUser']);
 $app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']);
 
+// Loan Management
+$app->router->get('/admin/loanManagement', [LoanController::class, 'loanManagement']);
+
 // Logout
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
@@ -65,6 +69,8 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->get('/catalog', [SiteController::class, 'catalog']);
 $app->router->post('/user/searchBooks', [SiteController::class, 'searchBooks']);
 $app->router->get('/book', [SiteController::class, 'bookDetail']);
+
+
 $app->run();
 
 
