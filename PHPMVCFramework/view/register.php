@@ -1,5 +1,3 @@
-
-
 <h1>create an accountus</h1>
 <form action="/register" method="post">
     <div class="form-group">
