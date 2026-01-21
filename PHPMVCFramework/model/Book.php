@@ -206,6 +206,11 @@ class Book {
         $stmt->execute();
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
-
+    public function getBookName() {
+        $sql = "SELECT BookID, Title FROM Book";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

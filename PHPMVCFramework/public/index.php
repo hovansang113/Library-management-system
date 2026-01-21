@@ -61,7 +61,7 @@ $app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']
 
 // Loan Management
 $app->router->get('/admin/loanManagement', [LoanController::class, 'loanManagement']);
-
+$app->router->post('/admin/loan/Store', [LoanController::class, 'loanProcess']);
 // Logout
 $app->router->get('/logout', [AuthController::class, 'logout']);
 

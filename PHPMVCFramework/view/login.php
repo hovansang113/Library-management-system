@@ -30,7 +30,7 @@
                 <label class="form-label">Password:</label>
                 <input type="password" name="password" class="form-control" placeholder="Password" required>
             </div>
-            <button class="button" type="submit" >Login</button>
+            <button class="button" name="button" type="submit" >Login</button>
         </form>
     </div>
 </body>

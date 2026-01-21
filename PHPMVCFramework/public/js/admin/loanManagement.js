@@ -23,3 +23,30 @@ overlay.addEventListener('click', () => {
     modal.style.display = 'none';
     overlay.style.display = 'none';
 });
+
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const rows = document.querySelectorAll("#loanTable tr");
+
+function filterLoans() {
+    const keyword = searchInput.value.toLowerCase();
+    const status = statusFilter.value;
+
+    rows.forEach(row => {
+        const book = row.children[0].textContent.toLowerCase();
+        const user = row.children[1].textContent.toLowerCase();
+        const rowStatus = row.querySelector("#status").textContent;
+
+        const matchKeyword =
+            book.includes(keyword) || user.includes(keyword);
+
+        const matchStatus =
+            status === "" || rowStatus === status;
+
+        row.style.display =
+            matchKeyword && matchStatus ? "" : "none";
+    });
+}
+
+searchInput.addEventListener("input", filterLoans);
+statusFilter.addEventListener("change", filterLoans);

@@ -31,17 +31,18 @@
         </div>
 
         <div class="search-box">
-            <input type="text" placeholder="Tìm kiếm theo tên sách hoặc người mượn..." />
-            <select>
-                <option>Tất cả</option>
-                <option>Đang mượn</option>
-                <option>Đã trả</option>
+            <input type="text"  id="searchInput" placeholder="Tìm kiếm theo tên sách hoặc người mượn..." />
+            <select id="statusFilter">
+                <option value="">Tất cả</option>
+                <option value="Borrowed">Đang mượn</option>
+                <option value="Returned">Đã trả</option>
             </select>
         </div>
 
+
         <div class="table-wrapper">
             <table>
-                <thead>
+                <thead> 
                     <tr>
                         <th>Tên sách</th>
                         <th>Người mượn</th>
@@ -52,52 +53,18 @@
                         <th>Thao tác</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Nhà Giả Kim</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>2024-12-25</td>
-                        <td class="overdue">2025-01-25 (Quá hạn)</td>
-                        <td>-</td>
-                        <td><span class="status status-borrowing">Đang mượn</span></td>
-                        <td><button class="btn-return">✔ Trả sách</button></td>
-                    </tr>
-                    <tr>
-                        <td>Đắc Nhân Tâm</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>2024-12-20</td>
-                        <td class="overdue">2025-01-20 (Quá hạn)</td>
-                        <td>-</td>
-                        <td><span class="status status-borrowing">Đang mượn</span></td>
-                        <td><button class="btn-return">✔ Trả sách</button></td>
-                    </tr>
-                    <tr>
-                        <td>Tôi Thấy Hoa Vàng Trên Cỏ Xanh</td>
-                        <td>Trần Thị B</td>
-                        <td>2024-12-15</td>
-                        <td class="overdue">2025-01-15 (Quá hạn)</td>
-                        <td>-</td>
-                        <td><span class="status status-borrowing">Đang mượn</span></td>
-                        <td><button class="btn-return">✔ Trả sách</button></td>
-                    </tr>
-                    <tr>
-                        <td>Đắc Nhân Tâm</td>
-                        <td>Trần Thị B</td>
-                        <td>2024-11-10</td>
-                        <td>2024-12-10</td>
-                        <td>2024-12-08</td>
-                        <td><span class="status status-returned">Đã trả</span></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Nhà Giả Kim</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>2024-11-01</td>
-                        <td>2024-12-01</td>
-                        <td>2024-11-28</td>
-                        <td><span class="status status-returned">Đã trả</span></td>
-                        <td></td>
-                    </tr>
+                <tbody id="loanTable">
+                    <?php foreach ($loans as $loan): ?>
+                        <tr>
+                            <td><?= $loan['Title'] ?></td>
+                            <td><?= $loan['UserName'] ?></td>
+                            <td><?= $loan['BorrowDate'] ?></td>
+                            <td><?= $loan['DueDate'] ?></td>
+                            <td><?= $loan['ReturnDate'] ?? '-' ?></td>
+                            <td id="status"><?= $loan['Status'] ?></td>
+                            <td><button class="return">Return</button></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -105,46 +72,55 @@
     </div>
     <div class="overlay"></div>
 
-    <div class="modal" style="display:none" >
-        <div>
-            <div class="modal-header">
-                <h3>Record Book Borrowing</h3>
-                <span class="close">×</span>
-            </div>
+    <form action="/admin/loan/Store" method="POST" >
+        <div class="modal" style="display:none" >
+            <div>
+                <div class="modal-header">
+                    <h3>Record Book Borrowing</h3>
+                    <span class="close">×</span>
+                </div>
 
-            <div class="form-group">
-                <label>Select Member *</label>
-                <select>
-                    <option>-- Select member --</option>
-                    <option>Nguyen Van A</option>
-                    <option>Tran Thi B</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Select Member *</label>
+                    <select name="user_id">
+                        <option value="">-- Select member --</option>
+                        <?php foreach ($members as $member): ?>
+                            <option value="<?= $member['MemberID'] ?>">
+                                <?= htmlspecialchars($member['UserName']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label>Select Book *</label>
-                <select>
-                    <option>-- Select book --</option>
-                    <option>The Alchemist</option>
-                    <option>How to Win Friends & Influence People</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Select Book *</label>
+                    <select name="book_id">
+                        <option value="">-- Select book --</option>
 
-            <div class="form-group">
-                <label>Expected Return Date *</label>
-                <input type="date">
-            </div>
+                        <?php foreach ($books as $book): ?>
+                            <option value="<?= $book['BookID'] ?>">
+                                <?= htmlspecialchars($book['Title']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-            <div class="note">
-                <strong>Note:</strong> After confirmation, the system will automatically
-                change the book status to <b>"Borrowed"</b> and decrease the available quantity.
-            </div>
+                <div class="form-group">
+                    <label>Expected Return Date *</label>
+                    <input type="date" name="expected_return_date" required>
+                </div>
 
-            <div class="actions">
-                <button class="btn-primary">Confirm Borrowing</button>
-                <button class="btn-secondary">Cancel</button>
-            </div>
-    </div>
+                <div class="note">
+                    <strong>Note:</strong> After confirmation, the system will automatically
+                    change the book status to <b>"Borrowed"</b> and decrease the available quantity.
+                </div>
+
+                <div class="actions">
+                    <button class="btn-primary">Confirm Borrowing</button>
+                    <button class="btn-secondary">Cancel</button>
+                </div>
+        </div>
+    </form>
 </div>
 
     <script src="/js/admin/loanManagement.js"></script>
