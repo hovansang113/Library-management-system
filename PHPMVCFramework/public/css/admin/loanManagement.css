@@ -139,13 +139,7 @@ th {
 }
 
 /* STATUS */
-.status {
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-}
+
 
 .status-borrowing {
     background: #fee2e2;
@@ -174,7 +168,6 @@ th {
     font-weight: 600;
 }
 
-/* ================= MODAL ================= */
 
 .modal {
     position: fixed;
@@ -267,12 +260,13 @@ th {
     flex: 1;
 }
 .return{
-    background-color: #16a34a;
-    color: white;
-    padding: 10px;
+    background-color: #DBFCE7;
+    color: #23A65E;
+    padding: 5px 10px;
     border-radius: 5px;
     border: none;
 }
+
 
 @media screen and (max-width: 768px) {
     .modal {

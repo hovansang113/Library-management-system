@@ -60,8 +60,10 @@
                             <td><?= $loan['UserName'] ?></td>
                             <td><?= $loan['BorrowDate'] ?></td>
                             <td><?= $loan['DueDate'] ?></td>
-                            <td><?= $loan['ReturnDate'] ?? '-' ?></td>
-                            <td id="status"><?= $loan['Status'] ?></td>
+                            <td><?= $loan['ReturnDate'] ?? 'null' ?></td>
+                            <td id="status" class="status" style="color: <?= $loan['Status'] === 'Borrowed' ? 'red' : '#16a34a' ?>; font-weight: bold;">
+                                <?= $loan['Status'] ?>
+                            </td>
                             <td>
                                 <?php if ($loan['Status'] === 'Borrowed'): ?>
                                     <form action="/admin/loan/Return" method="POST" onsubmit="return confirm('Xác nhận trả sách?');">
