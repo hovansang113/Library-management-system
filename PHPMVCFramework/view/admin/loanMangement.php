@@ -62,7 +62,14 @@
                             <td><?= $loan['DueDate'] ?></td>
                             <td><?= $loan['ReturnDate'] ?? '-' ?></td>
                             <td id="status"><?= $loan['Status'] ?></td>
-                            <td><button class="return">Return</button></td>
+                            <td>
+                                <?php if ($loan['Status'] === 'Borrowed'): ?>
+                                    <form action="/admin/loan/Return" method="POST" onsubmit="return confirm('Xác nhận trả sách?');">
+                                        <input type="hidden" name="loan_id" value="<?= $loan['LoanID'] ?>">
+                                        <button type="submit" class="return" style="cursor: pointer;">Return</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

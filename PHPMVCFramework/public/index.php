@@ -62,6 +62,7 @@ $app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']
 // Loan Management
 $app->router->get('/admin/loanManagement', [LoanController::class, 'loanManagement']);
 $app->router->post('/admin/loan/Store', [LoanController::class, 'loanProcess']);
+$app->router->post('/admin/loan/Return', [LoanController::class, 'returnBook']);
 // Logout
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
@@ -72,7 +73,3 @@ $app->router->get('/book', [SiteController::class, 'bookDetail']);
 
 
 $app->run();
-
-
-
-

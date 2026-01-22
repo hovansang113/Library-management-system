@@ -13,6 +13,7 @@ class Loan {
     public function getAllLoans(){
         $sql = "
             SELECT 
+                l.LoanID,
                 b.Title,
                 m.UserName,
                 l.BorrowDate,
@@ -57,6 +58,23 @@ class Loan {
         $stmt->execute([$copy_id]);
     }
 
+    public function markCopyReturned($copy_id){
+        $sql = "UPDATE Book_Copy SET Status='Available' WHERE CopyID=?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$copy_id]);
+    }
+
+    public function getCopyIdByLoan($loan_id){
+        $sql = "SELECT CopyID FROM Loan WHERE LoanID = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$loan_id]);
+        return $stmt->fetchColumn();
+    }
+
+    public function updateLoanStatus($loan_id){
+        $sql = "UPDATE Loan SET Status = 'Returned', ReturnDate = CURDATE() WHERE LoanID = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$loan_id]);
+    }
 
 }
-

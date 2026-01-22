@@ -50,5 +50,22 @@ class LoanController extends Controller
         exit;
     }
 
+    public function returnBook(Request $request){
+        $data = $request->getBody();
+        $loan_id = $data['loan_id'] ?? null;
+
+        if ($loan_id) {
+            $loanModel = new Loan();
+            $copy_id = $loanModel->getCopyIdByLoan($loan_id);
+
+            if ($copy_id) {
+                $loanModel->updateLoanStatus($loan_id);
+                $loanModel->markCopyReturned($copy_id);
+            }
+        }
+
+        header("Location: /admin/loanManagement");
+        exit;
+    }
 
 }
