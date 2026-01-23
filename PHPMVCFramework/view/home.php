@@ -64,7 +64,7 @@
                         <p class="availability">
                             Status <?= $book['AvailableCopies']; ?> / <?= $book['Quantity']; ?>
                         </p>
-                        <a href="/book/<?= $book['BookID']; ?>" class="btn-details">View details</a>
+                        <a href="/book?id=<?= $book['BookID']; ?>" class="btn-details">View details</a>
                     </div>
                 </div>
             <?php endforeach; ?>

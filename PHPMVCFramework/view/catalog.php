@@ -107,6 +107,7 @@
 
                             </span>
 
+
                             <a href="/book?id=<?= $book['BookID'] ?>" class="btn-detail">
                                 View details
                             </a>

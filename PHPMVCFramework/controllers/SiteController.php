@@ -18,6 +18,7 @@ class SiteController extends Controller
         $params = [
             'books' => $letestBooks
         ];
+        
         return $this->render('home', $params);
     }
 
