@@ -74,6 +74,7 @@ $app->router->get('/book', [SiteController::class, 'bookDetail']);
 
 // Admin Dashboard
 $app->router->get('/admin/dashboard', [\App\controllers\AdminDashboardController::class, 'dashBoard']);
+$app->router->get('/admin/dashboard', [SiteController::class, 'dashboard']);
 
 
 

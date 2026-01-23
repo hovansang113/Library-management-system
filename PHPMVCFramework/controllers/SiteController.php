@@ -112,7 +112,30 @@ class SiteController extends Controller
         ]);
     }
 
+    public function dashboard()
+    {
+        Middleware::checkAdmin();
+
+        $HomeModel = new \App\model\Home();
+
+        $stats = [
+            'members'   => $HomeModel->countMembers(),
+            'books'     => $HomeModel->countBooks(),
+            'borrowed'  => $HomeModel->countBorrowed(),
+            'available' => $HomeModel->countAvailable()
+        ];
+
+        $recentBorrowings = $HomeModel->getRecentBorrowings(5);
+
+        $this->setLayout('admin/mainAdmin');
+
+        return $this->render('admin/dashboard', [
+            'stats' => $stats,
+            'recentBorrowings' => $recentBorrowings
+        ]);
+    }
 
 
 
 }
+
