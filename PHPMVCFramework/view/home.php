@@ -30,7 +30,7 @@
             </div>
         </div>
     </section>
-
+    
     <section class="new-arrivals">
         <h2 class="section-title">New Arrivals</h2>
         <p class="subtitle">Fresh additions to our collection</p>
