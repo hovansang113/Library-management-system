@@ -10,10 +10,8 @@
 
 <div class="dashboard-container">
 
-    <!-- ===== STATISTICS ===== -->
 <div class="stat-grid">
 
-    <!-- Tổng thành viên -->
     <div class="stat-card">
         <div class="stat-info">
             <p class="title">Total Members</p>
@@ -25,7 +23,6 @@
         </div>
     </div>
 
-    <!-- Tổng số sách -->
     <div class="stat-card">
         <div class="stat-info">
             <p class="title">Total Books</p>
@@ -37,7 +34,6 @@
         </div>
     </div>
 
-    <!-- Sách đang cho mượn -->
     <div class="stat-card">
         <div class="stat-info">
             <p class="title">Borrowed</p>
@@ -49,7 +45,6 @@
         </div>
     </div>
 
-    <!-- Sách còn trống -->
     <div class="stat-card">
         <div class="stat-info">
             <p class="title">Available books</p>
@@ -62,7 +57,6 @@
     </div>
 </div><br>
 
-    <!-- ===== RECENT BORROWINGS ===== -->
     <div class="table-card">
         <h3>Recent Borrowings</h3>
 
