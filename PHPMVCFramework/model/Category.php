@@ -74,6 +74,21 @@ class Category {
             throw $e;
         }
     }
+
+     public function getCategoryStats() {
+        $sql = "
+            SELECT 
+                c.CategoryName,
+                SUM(b.Quantity) AS total_books
+            FROM Category c
+            LEFT JOIN Book b ON c.CategoryID = b.CategoryID
+            GROUP BY c.CategoryID
+        ";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
   
 }

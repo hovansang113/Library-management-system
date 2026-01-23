@@ -25,9 +25,7 @@ function highlightStatus() {
     });
 }
 
-/**
- * Format ngày tháng cho đẹp hơn (YYYY-MM-DD → DD/MM/YYYY)
- */
+
 function formatDates() {
     const dateCells = document.querySelectorAll(
         "tbody td:nth-child(3), tbody td:nth-child(4)"
@@ -41,3 +39,71 @@ function formatDates() {
         }
     });
 }
+
+
+
+const borrowReturnStats = window.borrowReturnStats || [];
+const categoryStats = window.categoryStats || [];
+
+
+const borrowLabels = borrowReturnStats.map(i => 'T' + i.month);
+const borrowedData = borrowReturnStats.map(i => i.borrowed);
+const returnedData = borrowReturnStats.map(i => i.returned);
+
+new Chart(document.getElementById('borrowReturnChart'), {
+    type: 'bar',
+    data: {
+        labels: borrowLabels,
+        datasets: [
+            {
+                label: 'Borrowed',
+                data: borrowedData,
+                backgroundColor: '#3b82f6'
+            },
+            {
+                label: 'Returned',
+                data: returnedData,
+                backgroundColor: '#10b981'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+/* ===============================
+   CHART 2: BOOKS BY CATEGORY
+================================ */
+const categoryLabels = categoryStats.map(c => c.CategoryName);
+const categoryData = categoryStats.map(c => c.total_books);
+
+new Chart(document.getElementById('categoryChart'), {
+    type: 'pie',
+    data: {
+        labels: categoryLabels,
+        datasets: [{
+            data: categoryData,
+            backgroundColor: [
+                '#3b82f6',
+                '#10b981',
+                '#f59e0b',
+                '#ef4444',
+                '#8b5cf6'
+            ]
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                position: 'right'
+            }
+        }
+    }
+});

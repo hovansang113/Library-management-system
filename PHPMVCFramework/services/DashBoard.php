@@ -30,7 +30,8 @@ class DashBoard{
             'totalBooks' => $totalBooks,
             'totalUsers' => $totalUsers,
             'totalAvailableCopies' => $totalAvailableCopies,
-            'totalBorrowedCopies' => $totalBorrowedCopies
+            'totalBorrowedCopies' => $totalBorrowedCopies,
+            'recentBorrowings' => $totalLoans
         ];
     }
 }

@@ -137,6 +137,18 @@ tbody tr:not(:last-child) {
     font-weight: 500;
 }
 
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+.chart-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
     .stat-grid {

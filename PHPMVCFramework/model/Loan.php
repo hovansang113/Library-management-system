@@ -77,4 +77,21 @@ class Loan {
         $stmt->execute([$loan_id]);
     }
 
+    public function getMonthlyBorrowReturn() {
+    $sql = "
+        SELECT 
+            MONTH(BorrowDate) AS month,
+            COUNT(*) AS borrowed,
+            SUM(CASE WHEN Status = 'Returned' THEN 1 ELSE 0 END) AS returned
+        FROM Loan
+        WHERE YEAR(BorrowDate) = YEAR(CURDATE())
+        GROUP BY MONTH(BorrowDate)
+        ORDER BY MONTH(BorrowDate)
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
