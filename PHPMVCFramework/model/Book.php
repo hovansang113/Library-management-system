@@ -213,4 +213,11 @@ class Book {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getTotalBook(){
+        $sql = "SELECT SUM(Quantity) AS total_quantity FROM Book;";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total_quantity'];
+    }
+
 }

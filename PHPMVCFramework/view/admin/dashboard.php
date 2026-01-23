@@ -26,7 +26,7 @@
     <div class="stat-card">
         <div class="stat-info">
             <p class="title">Total Books</p>
-            <h3><?= $stats['books'] ?? 51 ?></h3>
+            <h3><?= $data['total_quantity'] ?? 51 ?></h3>
             <span class="sub-text">5 titles</span>
         </div>
         <div class="stat-icon green">
