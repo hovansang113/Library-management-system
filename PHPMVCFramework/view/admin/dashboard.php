@@ -50,9 +50,9 @@
 
             <div class="stat-card">
                 <div class="stat-info">
-                    <p class="title">Available books</p>
+                    <p class="title">Available Books</p>
                     <h3><?= $totalAvailableCopies ?? 0 ?></h3>
-                    <span class="sub-text">In stock</span>
+                    <span class="sub-text">In Stock</span>
                 </div>
                 <div class="stat-icon purple">
                     <i class="fa-solid fa-check"></i>
@@ -62,16 +62,15 @@
 
         <div class="dashboard-grid">
             <div class="chart-card">
-                <h3>Xu hướng mượn trả sách</h3>
+                <h3>Book Borrowing and Returning Trends</h3>
                 <canvas id="borrowReturnChart"></canvas>
             </div>
 
             <div class="chart-card">
-                <h3>Phân bố thể loại sách</h3>
+                <h3>Book Category Distribution</h3>
                 <canvas id="categoryChart"></canvas>
             </div>
         </div>
-
 
         <div class="table-card">
             <h3>Recent Borrowings</h3>
