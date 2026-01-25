@@ -62,12 +62,12 @@
 
         <div class="dashboard-grid">
             <div class="chart-card">
-                <h3>Xu hướng mượn trả sách</h3>
+                <h3>The trend of borrowing and returning books.</h3>
                 <canvas id="borrowReturnChart"></canvas>
             </div>
 
             <div class="chart-card">
-                <h3>Phân bố thể loại sách</h3>
+                <h3>Distribution of book genres</h3>
                 <canvas id="categoryChart"></canvas>
             </div>
         </div>

@@ -78,9 +78,7 @@ new Chart(document.getElementById('borrowReturnChart'), {
     }
 });
 
-/* ===============================
-   CHART 2: BOOKS BY CATEGORY
-================================ */
+
 const categoryLabels = categoryStats.map(c => c.CategoryName);
 const categoryData = categoryStats.map(c => c.total_books);
 

@@ -11,46 +11,45 @@
 <body>
     <div class="main">
         <div class="top">
-            <h2>Quản lý mượn trả sách</h2>
-            <button class="btn-primary">+ Ghi nhận mượn sách</button>
+            <h2>Book Borrowing Management</h2>
+            <button class="btn-primary">+ Record Book Borrowing</button>
         </div>
 
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-title">Tổng lượt mượn</div>
+                <div class="stat-title">Total Borrowings</div>
                 <div class="stat-value">5</div>
             </div>
             <div class="stat-card">
-                <div class="stat-title">Đang mượn</div>
+                <div class="stat-title">Currently Borrowed</div>
                 <div class="stat-value orange">3</div>
             </div>
             <div class="stat-card">
-                <div class="stat-title">Đã trả</div>
+                <div class="stat-title">Returned</div>
                 <div class="stat-value green">2</div>
             </div>
         </div>
 
         <div class="search-box">
-            <input type="text"  id="searchInput" placeholder="Tìm kiếm theo tên sách hoặc người mượn..." />
+            <input type="text" id="searchInput" placeholder="Search by book title or borrower name..." />
             <select id="statusFilter">
-                <option value="">Tất cả</option>
-                <option value="Borrowed">Đang mượn</option>
-                <option value="Returned">Đã trả</option>
+                <option value="">All</option>
+                <option value="Borrowed">Borrowed</option>
+                <option value="Returned">Returned</option>
             </select>
         </div>
 
-
         <div class="table-wrapper">
             <table>
-                <thead> 
+                <thead>
                     <tr>
-                        <th>Tên sách</th>
-                        <th>Người mượn</th>
-                        <th>Ngày mượn</th>
-                        <th>Ngày trả dự kiến</th>
-                        <th>Ngày trả thực tế</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
+                        <th>Book Title</th>
+                        <th>Borrower</th>
+                        <th>Borrow Date</th>
+                        <th>Expected Return Date</th>
+                        <th>Actual Return Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="loanTable">
@@ -66,7 +65,7 @@
                             </td>
                             <td>
                                 <?php if ($loan['Status'] === 'Borrowed'): ?>
-                                    <form action="/admin/loan/Return" method="POST" onsubmit="return confirm('Xác nhận trả sách?');">
+                                    <form action="/admin/loan/Return" method="POST" onsubmit="return confirm('Confirm book return?');">
                                         <input type="hidden" name="loan_id" value="<?= $loan['LoanID'] ?>">
                                         <button type="submit" class="return" style="cursor: pointer;">Return</button>
                                     </form>
@@ -81,8 +80,8 @@
     </div>
     <div class="overlay"></div>
 
-    <form action="/admin/loan/Store" method="POST" >
-        <div class="modal" style="display:none" >
+    <form action="/admin/loan/Store" method="POST">
+        <div class="modal" style="display:none">
             <div>
                 <div class="modal-header">
                     <h3>Record Book Borrowing</h3>
@@ -105,7 +104,6 @@
                     <label>Select Book *</label>
                     <select name="book_id">
                         <option value="">-- Select book --</option>
-
                         <?php foreach ($books as $book): ?>
                             <option value="<?= $book['BookID'] ?>">
                                 <?= htmlspecialchars($book['Title']) ?>
@@ -128,12 +126,10 @@
                     <button class="btn-primary">Confirm Borrowing</button>
                     <button class="btn-secondary">Cancel</button>
                 </div>
+            </div>
         </div>
     </form>
-</div>
 
     <script src="/js/admin/loanManagement.js"></script>
 </body>
-
-
 </html>

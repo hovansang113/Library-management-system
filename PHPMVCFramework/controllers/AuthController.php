@@ -18,7 +18,6 @@ class AuthController extends Controller
     public function processLogin(Request $request)
     {
 
-
         $errors = [];
 
         if ($request->isPost()) {
