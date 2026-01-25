@@ -22,7 +22,7 @@
                     <span class="sub-text">Users</span>
                 </div>
                 <div class="stat-icon blue">
-                    👥
+                    <i class="fa-regular fa-user"></i>
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
                     <span class="sub-text">Copies</span>
                 </div>
                 <div class="stat-icon green">
-                    📘
+                    <i class="fa-solid fa-book-open"></i>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@
                     <span class="sub-text">Borrowings</span>
                 </div>
                 <div class="stat-icon orange">
-                    📙
+                    <i class="fa-solid fa-book-open-reader"></i>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                     <span class="sub-text">In stock</span>
                 </div>
                 <div class="stat-icon purple">
-                    ✔
+                    <i class="fa-solid fa-check"></i>
                 </div>
             </div>
         </div><br>

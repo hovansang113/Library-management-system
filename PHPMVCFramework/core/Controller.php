@@ -10,4 +10,4 @@ class Controller{
     public function setLayout($layout){
         $this->layout = $layout;
     }
-}
+}   

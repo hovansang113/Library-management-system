@@ -100,6 +100,8 @@ new Chart(document.getElementById('categoryChart'), {
         }]
     },
     options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'right'

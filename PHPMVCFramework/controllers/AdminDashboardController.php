@@ -26,7 +26,4 @@ class AdminDashboardController extends Controller{
             'categoryStats' => $categoryStats
         ], $data));
     }
-
-
-
 }
