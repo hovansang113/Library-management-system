@@ -30,7 +30,7 @@
             </div>
         </div>
     </section>
-
+    
     <section class="new-arrivals">
         <h2 class="section-title">New Arrivals</h2>
         <p class="subtitle">Fresh additions to our collection</p>
@@ -64,7 +64,7 @@
                         <p class="availability">
                             Status <?= $book['AvailableCopies']; ?> / <?= $book['Quantity']; ?>
                         </p>
-                        <a href="/book/<?= $book['BookID']; ?>" class="btn-details">View details</a>
+                        <a href="/book?id=<?= $book['BookID']; ?>" class="btn-details">View details</a>
                     </div>
                 </div>
             <?php endforeach; ?>

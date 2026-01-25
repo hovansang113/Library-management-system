@@ -25,6 +25,7 @@ class User {
                 return false; 
             }
             
+            
             return $user;
             
         } catch (\PDOException $e) {
@@ -81,5 +82,12 @@ class User {
         $stmt->bindValue(':Email', $email);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function countUsers(){
+        $sql = "SELECT COUNT(*) AS total FROM Member WHERE Role = 'User'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
 }

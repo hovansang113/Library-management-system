@@ -2,4 +2,4 @@
 !.gitignore
 .env
 .vendor/
-.
+.Dockerfile

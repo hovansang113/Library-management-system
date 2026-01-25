@@ -77,7 +77,7 @@
                                     <td><?= $index + 1 ?></td>
                                     <td><?= htmlspecialchars($book['Title']) ?></td>
                                     <td><?= htmlspecialchars($book['Author']) ?></td>
-                                    <td><?= htmlspecialchars($book['CategoryName']) ?></td>
+                                    <td><?= htmlspecialchars($book['Category']) ?></td>
                                     <td><?= htmlspecialchars($book['Description']) ?></td>
                                     <td class="text-green"><?= $book['Quantity'] ?></td>
                                     <td><?= $book['Status'] ?></td>
