@@ -42,8 +42,9 @@ class AuthController extends Controller
                     $_SESSION['user_email'] = $user['Email'];
                     $_SESSION['user_name'] = $user['UserName'];
                     $_SESSION['user_role'] = $user['Role'];
-
-
+                    $_SESSION['user_status'] = $user['Status'];
+                    $_SESSION['user_phone'] = $user['Phone'];
+                    $_SESSION['user_register_date'] = $user['RegisterDate'];
 
                     if ($user['Role'] === 'Admin') {
                         header('Location: /admin/dashboard');

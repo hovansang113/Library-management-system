@@ -15,6 +15,7 @@ class Application
 
     public function __construct($rootPath, array $config = [])
     {
+        session_start();
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
         $this->request = new Request();

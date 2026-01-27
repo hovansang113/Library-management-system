@@ -5,10 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     formatDates();
 });
 
-/**
- * Tô màu trạng thái mượn sách
- * (có thể mở rộng cho Overdue / Returned sau này)
- */
+
 function highlightStatus() {
     const statusCells = document.querySelectorAll(".status");
 

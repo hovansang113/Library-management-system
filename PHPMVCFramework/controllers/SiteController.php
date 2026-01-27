@@ -31,6 +31,10 @@ class SiteController extends Controller
     {
         return $this->render('product');
     }
+    public function profile()
+    {
+        return $this->render('profile');
+    }
 
     public function bookProcess()
     {

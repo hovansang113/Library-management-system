@@ -3,7 +3,6 @@
 namespace App\controllers;
 
 use App\core\Controller;
-use App\core\Request;
 use App\services\DashBoard;
 use App\model\Loan;
 use App\model\Category;

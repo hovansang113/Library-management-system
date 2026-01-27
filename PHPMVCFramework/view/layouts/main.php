@@ -30,7 +30,20 @@
         </ul>
 
         <div class="ms-auto">
-          <a href="/Login" class=" btn-signin">Sign in</a>
+          <?php if (isset($_SESSION['user_name'])): ?>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+              </ul>
+            </div>
+          <?php else: ?>
+            <a href="/Login" class="btn-signin">Sign in</a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

@@ -90,4 +90,34 @@ class User {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
+
+    public function getUserById($memberId) {
+        $sql = "SELECT * FROM Member WHERE MemberID = :MemberID LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':MemberID', $memberId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePassword($memberId, $newPassword)
+    {
+        $sql = "UPDATE Member SET Password = :password WHERE MemberID = :memberId";
+        $stmt = $this->db->prepare($sql);
+
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+
+        $stmt->bindValue(':password', $hashedPassword);
+        $stmt->bindValue(':memberId', $memberId, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    public function verifyCurrentPassword($memberId, $currentPassword)
+    {
+        $user = $this->getUserById($memberId);
+        if (!$user) {
+            return false;
+        }
+        return password_verify($currentPassword, $user['Password']);
+    }
 }

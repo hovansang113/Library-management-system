@@ -1,6 +1,6 @@
 <?php
 // public/index.php
-session_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -72,6 +72,9 @@ $app->router->get('/catalog', [SiteController::class, 'catalog']);
 $app->router->post('/user/searchBooks', [SiteController::class, 'searchBooks']);
 $app->router->get('/book', [SiteController::class, 'bookDetail']);
 
+ // Profile
+ $app->router->get('/profile', [SiteController::class, 'profile']); 
+ $app->router->post('/profile/changePassword', [UserController::class, 'changePassword']);
 
 // Admin Dashboard
 $app->router->get('/admin/dashboard', [AdminDashboardController::class, 'dashBoard']);
