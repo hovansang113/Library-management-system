@@ -1,0 +1,88 @@
+body {
+    background: #f4f8fb;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+.info-box {
+    display: flex;
+    justify-content: space-between;
+    background: #f0f4f8;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.btn-view {
+    text-decoration: none;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.borrowing {
+    background: #cfe2a3;
+    color: #4b6b21;
+}
+
+.overdue, .late {
+    background: #ff4d4f;
+    color: white;
+}
+
+.returned {
+    background: #d9d2cf;
+    color: #555;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    color: #555;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background: #4a90e2;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}

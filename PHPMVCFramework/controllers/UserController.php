@@ -102,4 +102,6 @@ class UserController extends Controller
         header('Location: /admin/userManagement');
         exit;
     }
+
+
 }

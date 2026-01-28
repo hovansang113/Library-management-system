@@ -71,11 +71,16 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->get('/catalog', [SiteController::class, 'catalog']);
 $app->router->post('/user/searchBooks', [SiteController::class, 'searchBooks']);
 $app->router->get('/book', [SiteController::class, 'bookDetail']);
+$app->router->get('/loans', [LoanController::class, 'userLoans']);
 
 
 // Admin Dashboard
 $app->router->get('/admin/dashboard', [AdminDashboardController::class, 'dashBoard']);
 
+// Member Dashboard
+$app->router->get('/member/memberdashboard', [UserController::class, 'memberDashboard']);
+$app->router->get('/member/current-loans', [UserController::class, 'currentLoans']);
+$app->router->get('/member/borrowing-history', [UserController::class, 'borrowingHistory']);
 
 
 $app->run();

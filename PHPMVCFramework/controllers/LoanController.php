@@ -68,4 +68,17 @@ class LoanController extends Controller
         exit;
     }
 
+    public function userLoans()
+    {
+        return $this->render('member/member-dashboard');
+    }
+
+    public function currentLoans()
+    {
+        return $this->render('member/current-loans');
+    }   
+    public function borrowingHistory()
+    {
+        return $this->render('member/borrowing-history');
+    }
 }
