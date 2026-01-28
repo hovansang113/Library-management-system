@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +40,6 @@
         <h2>Borrowing History</h2>
 
         <div class="info-box">
-            🕒 Listing history of your past borrowed books.
             <a href="borrowing-history.php" class="btn-view">View all</a>
         </div>
 

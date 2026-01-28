@@ -16,10 +16,9 @@ use App\controllers\LoanController;
 use App\controllers\AdminDashboardController;
 use Dotenv\Dotenv;
 
-// Tạm dừng để xem kết quả
+
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
-// public/index.php
 $config = [
     'db' => [
         'dsn'      => $_ENV['DB_DSN'] ?? '',
