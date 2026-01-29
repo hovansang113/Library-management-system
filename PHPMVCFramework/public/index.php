@@ -60,6 +60,9 @@ $app->router->post('/admin/saveUser', [UserController::class, 'saveUser']);
 $app->router->post('/admin/user/block', [UserController::class, 'blockUser']);
 $app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']);
 
+// User Loans
+$app->router->get('/loans', [LoanController::class, 'showUserLoans']);
+
 // Loan Management
 $app->router->get('/admin/loanManagement', [LoanController::class, 'loanManagement']);
 $app->router->post('/admin/loan/Store', [LoanController::class, 'loanProcess']);
@@ -78,6 +81,8 @@ $app->router->get('/book', [SiteController::class, 'bookDetail']);
 
 // Admin Dashboard
 $app->router->get('/admin/dashboard', [AdminDashboardController::class, 'dashBoard']);
+
+
 
 
 

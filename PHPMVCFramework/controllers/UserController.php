@@ -120,14 +120,12 @@ class UserController extends Controller
 
         if (empty($currentPassword) || empty($newPassword) || empty($confirmNewPassword)) {
             $_SESSION['error'] = 'Please fill in all required fields!';
-            $_SESSION['error'] = 'Vui lòng điền đầy đủ các trường!';
             header('Location: /profile');
             exit;
         }
 
         if ($newPassword !== $confirmNewPassword) {
             $_SESSION['error'] = 'New password does not match!';
-            $_SESSION['error'] = 'Mật khẩu mới không khớp!';
             header('Location: /profile');
             exit;
         }
@@ -136,13 +134,11 @@ class UserController extends Controller
 
         if (!$user) {
             $_SESSION['error'] = 'User not found!';
-        if (!$this->userModel->verifyCurrentPassword($memberId, $currentPassword)) {
-            $_SESSION['error'] = 'Mật khẩu hiện tại không đúng!';
             header('Location: /profile');
             exit;
         }
 
-        if (!password_verify($currentPassword, $user['Password'])) {
+        if (!$this->userModel->verifyCurrentPassword($memberId, $currentPassword)) {
             $_SESSION['error'] = 'Current password is incorrect!';
             header('Location: /profile');
             exit;
@@ -150,15 +146,11 @@ class UserController extends Controller
 
         if ($this->userModel->updatePassword($memberId, $newPassword)) {
             $_SESSION['success'] = 'Password changed successfully!';
-            $_SESSION['success'] = 'Đổi mật khẩu thành công!';
         } else {
             $_SESSION['error'] = 'An error occurred while changing the password!';
-            $_SESSION['error'] = 'Có lỗi xảy ra khi đổi mật khẩu!';
         }
 
         header('Location: /profile');
         exit;
     }
-
-}
 }

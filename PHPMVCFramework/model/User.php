@@ -108,7 +108,7 @@ class User {
 
         $stmt->bindValue(':password', $hashedPassword);
         $stmt->bindValue(':memberId', $memberId, PDO::PARAM_INT);
-
+        
         return $stmt->execute();
     }
 
@@ -121,3 +121,4 @@ class User {
         return password_verify($currentPassword, $user['Password']);
     }
 }
+

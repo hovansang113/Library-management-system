@@ -68,4 +68,37 @@ class LoanController extends Controller
         exit;
     }
 
+    public function showUserLoans()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /Login');
+            exit;
+        }
+
+        $userId = $_SESSION['user_id'];
+        $loanModel = new Loan();
+        $allLoans = $loanModel->loanForUser($userId);
+
+        $currentLoans = [];
+        $loanHistory = [];
+
+        foreach ($allLoans as $loan) {
+            if ($loan['Status'] === 'Borrowed') {
+                $dueDate = new \DateTime($loan['DueDate']);
+                $today = new \DateTime();
+                if ($dueDate < $today->setTime(0, 0, 0)) {
+                    $loan['Status'] = 'Overdue'; 
+                }
+                $currentLoans[] = $loan;
+            } else { 
+                $loanHistory[] = $loan;
+            }
+        }
+
+        $this->setLayout('main');
+        return $this->render('loans', [
+            'currentLoans' => $currentLoans,
+            'loanHistory' => $loanHistory
+        ]);
+    }
 }

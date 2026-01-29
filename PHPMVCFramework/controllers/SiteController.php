@@ -36,6 +36,12 @@ class SiteController extends Controller
         return $this->render('profile');
     }
 
+    public function loans()
+    {
+        return $this->render('loans');
+    }
+
+    
     public function bookProcess()
     {
         Middleware::checkAdmin();

@@ -94,4 +94,37 @@ class Loan {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getUserById($memberId) {
+        $sql = "SELECT * FROM Member WHERE MemberID = :MemberID LIMIT 1";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':MemberID', $memberId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    public function loanForUser($member_id){
+        
+        $sql = "
+            SELECT 
+                l.LoanID,
+                b.Title,
+                l.BorrowDate,
+                l.DueDate,
+                l.ReturnDate,
+                l.Status
+            FROM Loan l
+            JOIN Book_Copy bc ON l.CopyID = bc.CopyID
+            JOIN Book b ON bc.BookID = b.BookID
+            WHERE l.MemberID = :member_id
+            ORDER BY l.BorrowDate DESC
+        ";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':member_id', $member_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
