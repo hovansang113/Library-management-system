@@ -1,19 +1,22 @@
 <?php
+
 namespace App\controllers;
 
 use App\core\Controller;
 use App\core\Request;
 use App\model\Category;
+use App\helpers\ImageHelper;
+use App\services\ImportExcel;
 
 class BookInventory extends Controller
 {
-    
+
     public function showCategories()
     {
         $categoryModel = new Category();
         $categories = $categoryModel->getAllCategories();
 
-        
+
         $bookModel = new \App\model\Book();
         $books = $bookModel->getAllBooks();
 
@@ -46,11 +49,11 @@ class BookInventory extends Controller
             exit;
         }
 
-       
+
         return $this->showCategories();
     }
 
-   
+
     public function deleteCategory(Request $request)
     {
         $id = $request->getBody()['id'] ?? null;
@@ -60,7 +63,6 @@ class BookInventory extends Controller
 
                 $model = new Category();
                 $model->deleteCategory($id);
-                        
             } catch (\PDOException $e) {
                 // Flash message - lỗi
                 $_SESSION['error'] = 'Lỗi khi xóa danh mục: ' . $e->getMessage();
@@ -70,7 +72,7 @@ class BookInventory extends Controller
         exit;
     }
 
-   
+
     public function updateCategory(Request $request)
     {
         if ($request->isPost()) {
@@ -98,55 +100,27 @@ class BookInventory extends Controller
 
     public function addBook(Request $request)
     {
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $data = $request->getBody();
-            
-            // Xử lý upload file ảnh
-            if (isset($_FILES['Image']) && $_FILES['Image']['error'] === UPLOAD_ERR_OK) {
-                $file = $_FILES['Image'];
-                $fileName = $file['name'];
-                $fileTmpName = $file['tmp_name'];
-                $fileSize = $file['size'];
-                $fileType = $file['type'];
 
-                
-                $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
-                
-                
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                if (!in_array(strtolower($fileExt), $allowedExtensions)) {
-                    $_SESSION['error'] = 'Chỉ cho phép upload ảnh (jpg, jpeg, png, gif)!';
-                    header('Location: /admin/bookInventory');
-                    exit;
-                }
-                
-                
-                $uploadDir = __DIR__ . '/../public/img/homepage/item/';
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0755, true);
-                }
-      
-                $newFileName = 'book_' . time() . '_' . rand(1000, 9999) . '.' . $fileExt;
-                $uploadPath = $uploadDir . $newFileName;
-                
-                
-                if (move_uploaded_file($fileTmpName, $uploadPath)) {
-                  
-                    $data['Image'] = '/img/homepage/item/' . $newFileName;
-                    $bookModel = new \App\model\Book();
-                    $bookModel->createBook($data);
-                    $_SESSION['success'] = 'Sách đã được thêm thành công!';
-                } else {
-                    $_SESSION['error'] = 'Lỗi khi upload ảnh!';
-                }
-            } else {
-                $_SESSION['error'] = 'Vui lòng chọn ảnh!';
+            try {
+                $imageHelper = new ImageHelper();
+                $data['Image'] = $imageHelper->uploadBookImage(
+                    $_FILES['Image'] ?? null
+                ) ?? '/img/homepage/item/default-book.png';
+
+                $bookModel = new \App\model\Book();
+                $bookModel->createBook($data);
+                $_SESSION['success'] = 'Sách đã được thêm thành công!';
+            } catch (\Exception $e) {
+                $_SESSION['error'] = $e->getMessage();
             }
-            
+
             header('Location: /admin/bookInventory');
             exit;
         }
     }
+
 
     public function deleteBook(Request $request)
     {
@@ -162,7 +136,6 @@ class BookInventory extends Controller
                 } else {
                     $_SESSION['success'] = $result['message'];
                 }
-
             } catch (\PDOException $e) {
                 $_SESSION['error'] = 'Lỗi khi xóa sách: ' . $e->getMessage();
             }
@@ -174,7 +147,7 @@ class BookInventory extends Controller
 
     public function updateBook(Request $request)
     {
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $data = $request->getBody();
             $bookId = $data['BookID'] ?? null;
 
@@ -186,42 +159,19 @@ class BookInventory extends Controller
 
             $bookModel = new \App\model\Book();
 
-            // Xử lý upload file ảnh nếu có
-            if (isset($_FILES['Image']) && $_FILES['Image']['error'] === UPLOAD_ERR_OK) {
-                $file = $_FILES['Image'];
-                $fileName = $file['name'];
-                $fileTmpName = $file['tmp_name'];
-                $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
-                
-                // Kiểm tra định dạng file
-                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-                if (!in_array(strtolower($fileExt), $allowedExtensions)) {
-                    $_SESSION['error'] = 'Chỉ cho phép upload ảnh (jpg, jpeg, png, gif)!';
-                    header('Location: /admin/bookInventory');
-                    exit;
-                }
-                
-                // Tạo thư mục nếu chưa tồn tại
-                $uploadDir = __DIR__ . '/../public/img/homepage/item/';
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0755, true);
-                }
-                
-                // Tạo tên file mới theo BookID
-                $newFileName = 'book' . $bookId . '.' . $fileExt;
-                $uploadPath = $uploadDir . $newFileName;
-                
-                // Di chuyển file
-                if (move_uploaded_file($fileTmpName, $uploadPath)) {
-                    $data['Image'] = '/img/homepage/item/' . $newFileName;
-                } else {
-                    $_SESSION['error'] = 'Lỗi khi upload ảnh!';
-                    header('Location: /admin/bookInventory');
-                    exit;
-                }
+            $currentBook = $bookModel->getBookById($bookId);
+            if (!$currentBook) {
+                $_SESSION['error'] = 'Sách không tồn tại!';
+                header('Location: /admin/bookInventory');
+                exit;
             }
-            
+
             try {
+                $imageHelper = new ImageHelper();
+                $newImage = $imageHelper->uploadBookImage($_FILES['Image'] ?? null, $bookId);
+
+                $data['Image'] = $newImage ?: $currentBook['Image'];
+
                 $bookModel->updateBook($bookId, $data);
                 $_SESSION['success'] = 'Sách đã được cập nhật thành công!';
             } catch (\Exception $e) {
@@ -236,7 +186,7 @@ class BookInventory extends Controller
     public function searchBooks(Request $request)
     {
         $keyword = $request->getBody()['keyword'] ?? '';
-        
+
         if (empty($keyword)) {
             return json_encode(['books' => []]);
         }
@@ -248,6 +198,27 @@ class BookInventory extends Controller
         return json_encode(['books' => $books]);
     }
 
+    public function importExcel(Request $request)
+    {
+        if (!$request->isPost()) return;
+
+        try {
+            $file = $_FILES['excel'] ?? null;
+            if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
+                throw new \Exception('Vui lòng chọn file Excel hợp lệ!');
+            }
+
+            $tmpPath = $file['tmp_name'];
+
+            $importService = new ImportExcel();
+            $total = $importService->importBooks($tmpPath);
+
+            $_SESSION['success'] = "Import thành công $total sách";
+        } catch (\Throwable $e) {
+            $_SESSION['error'] = $e->getMessage();
+        }
+
+        header('Location: /admin/bookInventory');
+        exit;
+    }
 }
-
-

@@ -52,6 +52,7 @@ $app->router->post('/admin/addBook', [BookInventory::class, 'addBook']);
 $app->router->post('/admin/updateBook', [BookInventory::class, 'updateBook']);
 $app->router->post('/admin/deleteBook', [BookInventory::class, 'deleteBook']);
 $app->router->post('/admin/searchBooks', [BookInventory::class, 'searchBooks']);
+$app->router->post('/admin/importExcel', [BookInventory::class, 'importExcel']);
 
 
 // User Management

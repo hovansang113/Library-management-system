@@ -53,6 +53,21 @@
                     <button class="btn-primary">
                         <i class="fa-solid fa-plus"></i> Add Book
                     </button>
+                    <form action="/admin/importExcel" method="POST" enctype="multipart/form-data" class="import-form">
+                        <input type="file" name="excel" id="excel-file" accept=".xlsx, .xls" hidden>
+                        
+                        <label for="excel-file" class="btn-file-select">
+                            <i class="fa-solid fa-file-excel"></i> Chọn file Excel
+                        </label>
+                        
+                        <span id="file-name-display"></span>
+                        
+                        <button type="submit" class="btn-import">
+                            <i class="fa-solid fa-upload"></i> Import
+                        </button>
+                    </form>
+
+
                 </div>
             </header>
 

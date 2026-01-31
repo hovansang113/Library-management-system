@@ -278,4 +278,17 @@ function handleDeleteClick(event) {
     }
 }
 
-attachEditDeleteListeners();
+
+
+const excelInput = document.getElementById('excel-file');
+const fileNameDisplay = document.getElementById('file-name-display');
+
+if (excelInput && fileNameDisplay) {
+    excelInput.addEventListener('change', function() {
+        if (this.files && this.files.length > 0) {
+            fileNameDisplay.textContent = this.files[0].name;
+        } else {
+            fileNameDisplay.textContent = '';
+        }
+    });
+}

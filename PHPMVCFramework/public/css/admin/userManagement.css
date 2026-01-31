@@ -267,3 +267,64 @@
 }
 .btn-icon-edit:hover { transform: scale(1.1); }
 .btn-icon-delete:hover { transform: scale(1.1); }
+
+/* ============ IMPORT EXCEL FORM ============ */
+.import-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-file-select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    color: #475569;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-file-select:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+.btn-file-select i {
+    color: #2563eb;
+    font-size: 16px;
+}
+
+.btn-import {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-import:hover {
+    background-color: #059669;
+}
+
+#file-name-display {
+    font-size: 13px;
+    color: #64748b;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
