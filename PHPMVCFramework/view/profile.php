@@ -54,6 +54,9 @@
                     </div>
                 </div>
 
+                <!-- Thẻ <form> sử dụng method POST để gửi dữ liệu một cách an toàn và chỉ định action="/profile/changePassword", 
+                    nghĩa là khi người dùng nhấn nút xác nhận, dữ liệu sẽ được gửi đến controller 
+                    tương ứng để xử lý logic đổi mật khẩu ở phía server. -->
                 <div class="col-md-6">
                     <div class="card shadow-sm h-100">
                         <div class="card-header">
