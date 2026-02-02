@@ -1,11 +1,14 @@
 -- =========================
 -- Create Database
 -- =========================
+-- drop database library_db;
 CREATE DATABASE IF NOT EXISTS library_db
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
 USE library_db;
+
+
 
 -- =========================
 -- Table: Category
@@ -56,6 +59,21 @@ CREATE INDEX idx_copy_book ON Book_Copy(BookID);
 -- =========================
 -- Table: Member
 -- =========================
+DELIMITER $$
+
+CREATE TRIGGER after_book_insert
+AFTER INSERT ON Book
+FOR EACH ROW
+BEGIN
+    DECLARE i INT DEFAULT 0;
+    WHILE i < NEW.Quantity DO
+        INSERT INTO Book_Copy (BookID, Status) 
+        VALUES (NEW.BookID, 'Available');
+        SET i = i + 1;
+    END WHILE;
+END$$
+
+DELIMITER ;
 CREATE TABLE Member (
     MemberID INT AUTO_INCREMENT PRIMARY KEY,
     UserName VARCHAR(50) NOT NULL,
@@ -75,6 +93,18 @@ VALUES (
     '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
     'Active', 
     'User'
+);
+
+CREATE TABLE Book_request (
+    RequestID INT AUTO_INCREMENT PRIMARY KEY,
+    MemberID INT NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    Author VARCHAR(255),
+    Reason TEXT,
+    Status ENUM('Pending', 'Approved', 'Rejected') DEFAULT 'Pending',
+    RequestDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (MemberID) REFERENCES Member(MemberID)
 );
 
 -- =========================
@@ -135,24 +165,7 @@ UPDATE Member
 SET Role = "Admin"
 WHERE MemberID = 1;
 
--- =========================
--- Tạo Trigger tự động thêm Book_Copy
--- =========================
-DELIMITER $$
 
-CREATE TRIGGER after_book_insert
-AFTER INSERT ON Book
-FOR EACH ROW
-BEGIN
-    DECLARE i INT DEFAULT 0;
-    WHILE i < NEW.Quantity DO
-        INSERT INTO Book_Copy (BookID, Status) 
-        VALUES (NEW.BookID, 'Available');
-        SET i = i + 1;
-    END WHILE;
-END$$
-
-DELIMITER ;
 
 -- =========================
 -- Kiểm tra kết quả

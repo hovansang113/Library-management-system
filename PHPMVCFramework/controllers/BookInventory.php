@@ -63,9 +63,11 @@ class BookInventory extends Controller
 
                 $model = new Category();
                 $model->deleteCategory($id);
-            } catch (\PDOException $e) {
-                // Flash message - lỗi
-                $_SESSION['error'] = 'Lỗi khi xóa danh mục: ' . $e->getMessage();
+                $_SESSION['success'] = 'Danh mục và các sách liên quan đã được xóa thành công!';
+            } catch (\Exception $e) {
+                // Bắt tất cả lỗi từ model (ví dụ: không thể xóa do sách đang được mượn)
+                // và hiển thị thông báo thân thiện cho người dùng.
+                $_SESSION['error'] = $e->getMessage();
             }
         }
         header('Location: /admin/bookInventory');

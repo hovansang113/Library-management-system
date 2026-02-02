@@ -49,29 +49,47 @@ class Category {
 
     public function deleteCategory($id){
         try {
-            
+            // Kiểm tra xem có sách nào trong danh mục này đang được mượn không
+            $sqlCheckLoan = "
+                SELECT 1 FROM Loan l
+                JOIN Book_Copy bc ON l.CopyID = bc.CopyID
+                JOIN Book b ON bc.BookID = b.BookID
+                WHERE b.CategoryID = :id AND l.Status = 'Borrowed'
+                LIMIT 1
+            ";
+            $stmtCheck = $this->db->prepare($sqlCheckLoan);
+            $stmtCheck->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmtCheck->execute();
+
+            if ($stmtCheck->fetch()) {
+                // Nếu có sách đang được mượn, không cho xóa và báo lỗi
+                throw new \Exception('Không thể xóa danh mục vì có sách thuộc danh mục này đang được mượn.');
+            }
+
+            // Nếu không, tiến hành xóa trong một transaction
             $this->db->beginTransaction();
             
-           
+            // Xóa các sách thuộc danh mục này. Thao tác này sẽ tự động xóa các bản sao (Book_Copy)
+            // nhờ có 'ON DELETE CASCADE' trong bảng Book_Copy.
             $sqlDeleteBooks = "DELETE FROM Book WHERE CategoryID = :id";
             $stmtDeleteBooks = $this->db->prepare($sqlDeleteBooks);
             $stmtDeleteBooks->bindValue(':id', $id, PDO::PARAM_INT);
             $stmtDeleteBooks->execute();
             
-            
+            // Cuối cùng, xóa danh mục
             $sqlDeleteCategory = "DELETE FROM Category WHERE CategoryID = :id";
             $stmtDeleteCategory = $this->db->prepare($sqlDeleteCategory);
             $stmtDeleteCategory->bindValue(':id', $id, PDO::PARAM_INT);
             $result = $stmtDeleteCategory->execute();
             
-            
             $this->db->commit();
             
             return $result;
-        } catch (\PDOException $e) {
-            
-            $this->db->rollBack();
-            throw $e;
+        } catch (\Exception $e) { // Bắt cả PDOException và Exception tự định nghĩa
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            throw $e; // Ném lại exception để controller xử lý
         }
     }
 

@@ -14,6 +14,7 @@ use App\controllers\BookInventory;
 use App\controllers\UserController;
 use App\controllers\LoanController;
 use App\controllers\AdminDashboardController;
+use App\controllers\BookRequestController;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -31,8 +32,6 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 // Site pages
 $app->router->get('/', [SiteController::class, 'home']);
-$app->router->get('/contact', [SiteController::class, 'contact']);
-$app->router->post('/contact', [SiteController::class, 'handleContact']);
 
 
 // Auth pages

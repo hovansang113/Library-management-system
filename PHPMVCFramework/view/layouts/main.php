@@ -26,7 +26,7 @@
           <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="/catalog">Catalog</a></li>
           <li class="nav-item"><a class="nav-link" href="/loans">Loans</a></li>
-          <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="/bookRequest">Book request</a></li>
         </ul>
 
         <div class="ms-auto">
