@@ -14,6 +14,7 @@ use App\controllers\BookInventory;
 use App\controllers\UserController;
 use App\controllers\LoanController;
 use App\controllers\AdminDashboardController;
+use App\controllers\BookRequestController;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -83,7 +84,9 @@ $app->router->get('/book', [SiteController::class, 'bookDetail']);
 // Admin Dashboard
 $app->router->get('/admin/dashboard', [AdminDashboardController::class, 'dashBoard']);
 
-
+// Book Request
+$app->router->get('/bookRequest', [BookRequestController::class, 'handleBookRequest']);
+$app->router->post('/bookRequest', [BookRequestController::class, 'handleBookRequest']);
 
 
 
