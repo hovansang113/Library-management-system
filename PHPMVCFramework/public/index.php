@@ -15,6 +15,7 @@ use App\controllers\UserController;
 use App\controllers\LoanController;
 use App\controllers\AdminDashboardController;
 use App\controllers\BookRequestController;
+use App\controllers\RequestApproval;
 use Dotenv\Dotenv;
 
 // Tạm dừng để xem kết quả
@@ -88,6 +89,10 @@ $app->router->get('/admin/dashboard', [AdminDashboardController::class, 'dashBoa
 $app->router->get('/bookRequest', [BookRequestController::class, 'handleBookRequest']);
 $app->router->post('/bookRequest', [BookRequestController::class, 'handleBookRequest']);
 
+
+$app->router->get('/admin/requestApproval', [RequestApproval::class, 'requestApproval']);
+$app->router->post('/admin/request/approve', [RequestApproval::class, 'approveRequest']);
+$app->router->post('/admin/request/reject', [RequestApproval::class, 'rejectRequest']);
 
 
 $app->run();

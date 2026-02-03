@@ -1,77 +1,79 @@
 <?php
+
 namespace App\model;
 
 use PDO;
- 
-class Book_request {
-    private $db;
-    private $table = 'Book_request';
 
-    public function __construct() {
+class Book_request
+{
+    private $db;
+
+    public function __construct()
+    {
         $this->db = \App\core\Database::getInstance();
     }
 
-    public function create(array $data) {
-        try {
-
-            $stmt = $this->db->prepare(
-                "INSERT INTO {$this->table} (MemberID, Title, Author, Reason) 
-                 VALUES (:MemberID, :Title, :Author, :Reason)"
-            );
-            $stmt->bindParam(':MemberID', $data['MemberID']);
-            $stmt->bindParam(':Title', $data['Title']);
-            $stmt->bindParam(':Author', $data['Author']);
-            $stmt->bindParam(':Reason', $data['Reason']);
-            return $stmt->execute();
-        } catch (\PDOException $e) {
-            error_log("BookRequest creation error: " . $e->getMessage());
-            return false;
-        }
+    public function create(array $data)
+    {
+        $sql = "INSERT INTO book_request (MemberID, Title, Author, Reason) VALUES (:MemberID, :Title, :Author, :Reason)";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':MemberID' => $data['MemberID'],
+            ':Title'    => $data['Title'],
+            ':Author'   => $data['Author'],
+            ':Reason'   => $data['Reason']
+        ]);
     }
 
-    public function getRequestsByUserId(int $userId) {
-        try {
-            $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE MemberID = :MemberID ORDER BY RequestDate DESC");
-            $stmt->bindParam(':MemberID', $userId, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            error_log("getRequestsByUserId error: " . $e->getMessage());
-            return [];
-        }
+    public function getRequestsByUserId(int $userId)
+    {
+        $sql = "SELECT * FROM book_request WHERE MemberID = :userId ORDER BY RequestDate DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':userId' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAllRequests() {
-        try {
-            $stmt = $this->db->prepare(
-                "SELECT br.*, m.UserName 
-                 FROM {$this->table} AS br
-                 JOIN Member AS m ON br.MemberID = m.MemberID
-                 ORDER BY br.RequestDate DESC"
-            );
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
-            error_log("getAllRequests error: " . $e->getMessage());
-            return [];
-        }
+    public function getAllRequestsWithUserDetails()
+    {
+        $sql = "SELECT 
+                    br.RequestID,
+                    br.RequestDate,
+                    m.UserName AS MemberName,
+                    br.Title,
+                    br.Author,
+                    br.Reason,
+                    br.Status
+                FROM book_request br
+                JOIN Member m ON br.MemberID = m.MemberID
+                ORDER BY br.RequestDate DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function updateStatus(int $requestId, string $status) {
-        // Kiểm tra để đảm bảo status là một trong các giá trị hợp lệ
-        if (!in_array($status, ['Approved', 'Rejected', 'Pending'])) {
+    public function updateStatus(int $requestId, string $status)
+    {
+        if (!in_array($status, ['Approved', 'Rejected'])) {
             return false;
         }
-        try {
-            $stmt = $this->db->prepare(
-                "UPDATE {$this->table} SET Status = :Status WHERE RequestID = :RequestID"
-            );
-            $stmt->bindParam(':Status', $status, PDO::PARAM_STR);
-            $stmt->bindParam(':RequestID', $requestId, PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (\PDOException $e) {
-            error_log("updateStatus error: " . $e->getMessage());
-            return false;
-        }
+        $sql = "UPDATE book_request SET Status = :status WHERE RequestID = :requestId";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([
+            ':status'    => $status,
+            ':requestId' => $requestId
+        ]);
+    }
+
+    public function getRequestStats()
+    {
+        $sql = "SELECT
+                    COUNT(*) AS total,
+                    SUM(CASE WHEN Status = 'Pending' THEN 1 ELSE 0 END) AS pending,
+                    SUM(CASE WHEN Status = 'Approved' THEN 1 ELSE 0 END) AS approved,
+                    SUM(CASE WHEN Status = 'Rejected' THEN 1 ELSE 0 END) AS rejected
+                FROM book_request";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: ['total' => 0, 'pending' => 0, 'approved' => 0, 'rejected' => 0];
     }
 }

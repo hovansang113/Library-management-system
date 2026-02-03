@@ -32,12 +32,12 @@ class BookRequestController extends Controller
                 ];
 
                 if ($bookRequestModel->create($dataToCreate)) {
-                    $_SESSION['success'] = 'Yêu cầu của bạn đã được gửi thành công!';
+                    $_SESSION['success'] = 'Your request has been sent successfully!';
                 } else {
-                    $_SESSION['error'] = 'Gửi yêu cầu thất bại. Vui lòng thử lại.';
+                    $_SESSION['error'] = 'Failed to send request. Please try again.';
                 }
             } else {
-                $_SESSION['error'] = 'Tiêu đề sách không được để trống.';
+                $_SESSION['error'] = 'Book title cannot be empty.';
             }
 
             // Redirect to the same page to show the new request and prevent form resubmission
