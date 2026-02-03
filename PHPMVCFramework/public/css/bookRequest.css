@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ===== Main card (Form) ===== */
+.card {
+    background: #fff;
+    max-width: 900px;
+    margin: 30px auto 30px auto; /* ← thêm khoảng cách với header */
+    padding: 25px 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card h2 {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* ===== Form ===== */
+form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+form input:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #d9b35f;
+}
+
+/* ===== Submit button ===== */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #a9b9ff;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #c9a64f;
+}
+
+/* ===== Your request section ===== */
+h3 {
+    max-width: 900px;
+    margin: 0 auto 15px auto;
+}
+
+/* ===== Request card ===== */
+.request-card {
+    max-width: 900px;
+    margin: 0 auto 15px auto;
+    background: #ccfbf6;
+    padding: 18px 22px;
+    border-radius: 14px;
+    position: relative;
+}
+
+.request-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.request-info {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* ===== Status button ===== */
+.status-btn {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    padding: 6px 14px;
+    border-radius: 14px;
+    border: none;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: default;
+    background: #e0c06f;
+    color: #fff;
+}
+
+/* ===== Empty text ===== */
+p {
+    max-width: 900px;
+    margin: 0 auto;
+    color: #777;
+    font-size: 14px;
+}
+

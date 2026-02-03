@@ -46,7 +46,6 @@ class SiteController extends Controller
         return $this->render('bookRequest');
     }
 
-
     
     public function bookProcess()
     {
