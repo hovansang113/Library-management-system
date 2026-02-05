@@ -67,19 +67,35 @@ class Router{
     protected function layoutContent(){
         $layout = Application::$app->controller->layout;
         ob_start();
-        include_once Application::$ROOT_DIR."/view/layouts/$layout.php";
+
+        $layoutPath = Application::$ROOT_DIR . "/view/layouts/$layout.php";
+
+        if(!file_exists($layoutPath)){
+            die("Layout not found: " . $layoutPath);
+        }
+        include_once $layoutPath;
         return ob_get_clean();    
     }
+
 
     protected function renderOnlyView($view, $params){
         foreach ($params as $key => $value){
             $$key = $value;
         }
-        
+
         ob_start();
-        include_once Application::$ROOT_DIR."/view/$view.php";
+
+        $viewPath = Application::$ROOT_DIR . "/view/$view.php";
+
+        if(!file_exists($viewPath)){
+            die("View not found: " . $viewPath);
+        }
+
+        include_once $viewPath;
+
         return ob_get_clean();  
     }
+
 
 }
 

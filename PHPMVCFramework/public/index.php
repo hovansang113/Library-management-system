@@ -1,29 +1,97 @@
 <?php
 // public/index.php
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+
+require_once __DIR__ . '/../vendor/autoload.php';
 use App\core\Application;
 use App\controllers\SiteController;
 use App\controllers\AuthController;
+use App\controllers\BookInventory;
+use App\controllers\UserController;
+use App\controllers\LoanController;
+use App\controllers\AdminDashboardController;
+use App\controllers\BookRequestController;
+use App\controllers\RequestApproval;
+use Dotenv\Dotenv;
 
-$app = new Application(dirname(__DIR__));
+// Tạm dừng để xem kết quả
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+// public/index.php
+$config = [
+    'db' => [
+        'dsn'      => $_ENV['DB_DSN'] ?? '',
+        'user'     => $_ENV['DB_USER'] ?? '',
+        'password' => $_ENV['DB_PASSWORD'] ?? '',
+    ]
+];
 
+$app = new Application(dirname(__DIR__), $config);
 // Site pages
 $app->router->get('/', [SiteController::class, 'home']);
-$app->router->get('/contact', [SiteController::class, 'contact']);
-$app->router->post('/contact', [SiteController::class, 'handleContact']);
-$app->router->get('/product', [SiteController::class, 'product']);
+
 
 // Auth pages
-$app->router->get('/login', [AuthController::class, 'login']);
-$app->router->post('/login', [AuthController::class, 'login']);
+$app->router->get('/Login', [AuthController::class, 'login']);
+$app->router->post('/Login', [AuthController::class, 'processLogin']);
 
-$app->router->get('/register', [AuthController::class, 'register']);
-$app->router->post('/register', [AuthController::class, 'register']);
+
+// Site Admin pages
+// Book Inventory page
+$app->router->get('/admin/bookInventory', [BookInventory::class, 'showCategories']);
+$app->router->post('/admin/addCategory', [BookInventory::class, 'addCategory']);
+$app->router->post('/admin/deleteCategory', [BookInventory::class, 'deleteCategory']);
+$app->router->post('/admin/updateCategory', [BookInventory::class, 'updateCategory']);
+
+// add new book
+$app->router->post('/admin/addBook', [BookInventory::class, 'addBook']);
+$app->router->post('/admin/updateBook', [BookInventory::class, 'updateBook']);
+$app->router->post('/admin/deleteBook', [BookInventory::class, 'deleteBook']);
+$app->router->post('/admin/searchBooks', [BookInventory::class, 'searchBooks']);
+$app->router->post('/admin/importExcel', [BookInventory::class, 'importExcel']);
+
+
+// User Management
+$app->router->get('/admin/userManagement', [UserController::class, 'userManagement']);
+$app->router->post('/admin/saveUser', [UserController::class, 'saveUser']);
+$app->router->post('/admin/user/block', [UserController::class, 'blockUser']);
+$app->router->post('/admin/user/unblock', [UserController::class, 'unblockUser']);
+
+// User Loans
+$app->router->get('/loans', [LoanController::class, 'showUserLoans']);
+
+//
+// Loan Management
+$app->router->get('/admin/loanManagement', [LoanController::class, 'loanManagement']);
+$app->router->post('/admin/loan/Store', [LoanController::class, 'loanProcess']);
+$app->router->post('/admin/loan/Return', [LoanController::class, 'returnBook']);
+// Logout
+$app->router->get('/logout', [AuthController::class, 'logout']);
+
+//catelog
+$app->router->get('/catalog', [SiteController::class, 'catalog']);
+$app->router->post('/user/searchBooks', [SiteController::class, 'searchBooks']);
+$app->router->get('/book', [SiteController::class, 'bookDetail']);
+
+ // Profile
+ $app->router->get('/profile', [SiteController::class, 'profile']); 
+ $app->router->post('/profile/changePassword', [UserController::class, 'changePassword']);
+
+// Admin Dashboard
+$app->router->get('/admin/dashboard', [AdminDashboardController::class, 'dashBoard']);
+
+// Book Request
+$app->router->get('/bookRequest', [BookRequestController::class, 'handleBookRequest']);
+$app->router->post('/bookRequest', [BookRequestController::class, 'handleBookRequest']);
+
+
+$app->router->get('/admin/requestApproval', [RequestApproval::class, 'requestApproval']);
+$app->router->post('/admin/request/approve', [RequestApproval::class, 'approveRequest']);
+$app->router->post('/admin/request/reject', [RequestApproval::class, 'rejectRequest']);
+
 
 $app->run();
-
-
-
-
