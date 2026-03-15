@@ -195,13 +195,10 @@ VALUES (
     '0987654321', 
     'admin@gmail.com', 
     CURDATE(), 
-    '$2y$10$5O3kKvDEqYW5kXiXXhGO4eqC5XjXxHxHxHxHxHxHxHxHxHxHxHxHxu', 
+    '$2y$12$T5rYGFKPKJn4FPsCIrp1Z.dgtPk.bBdUEQtmeC5q9mnWwrlve2eCS', 
     'Active', 
     'Admin'
 );
-UPDATE Member
-SET Role = 'User'
-WHERE MemberID >= 3;
 
 -- Xem chi tiết Book_Copy
 SELECT * FROM Book_Copy ORDER BY BookID, CopyID;

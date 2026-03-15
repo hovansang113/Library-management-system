@@ -65,8 +65,7 @@ class BookInventory extends Controller
                 $model->deleteCategory($id);
                 $_SESSION['success'] = 'Danh mục và các sách liên quan đã được xóa thành công!';
             } catch (\Exception $e) {
-                // Bắt tất cả lỗi từ model (ví dụ: không thể xóa do sách đang được mượn)
-                // và hiển thị thông báo thân thiện cho người dùng.
+  
                 $_SESSION['error'] = $e->getMessage();
             }
         }

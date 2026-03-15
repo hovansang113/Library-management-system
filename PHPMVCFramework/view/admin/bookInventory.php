@@ -48,7 +48,7 @@
                 <div class="actions">
                     <div class="search-box">
                         <i class="fa-solid fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Tìm kiếm sách...">
+                        <input type="text" id="searchInput" placeholder="search book">
                     </div>
                     <button class="btn-primary">
                         <i class="fa-solid fa-plus"></i> Add Book
@@ -57,7 +57,7 @@
                         <input type="file" name="excel" id="excel-file" accept=".xlsx, .xls" hidden>
                         
                         <label for="excel-file" class="btn-file-select">
-                            <i class="fa-solid fa-file-excel"></i> Chọn file Excel
+                            <i class="fa-solid fa-file-excel"></i> Choose file Excel
                         </label>
                         
                         <span id="file-name-display"></span>
@@ -149,7 +149,7 @@
                     <label for="category">Category</label>
                     <div class="select-wrapper">
                         <select id="category" name="CategoryID" required>
-                        <option value="" disabled selected>Chọn danh mục</option>
+                        <option value="" disabled selected>choose category</option>
 
                         <?php foreach ($categories as $cat): ?>
                             <option value="<?= $cat['CategoryID'] ?>">

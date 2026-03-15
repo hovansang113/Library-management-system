@@ -1,28 +1,25 @@
-# Base image PHP 8.4 CLI
-FROM php:8.4-cli
+FROM php:8.3-apache
 
-# Cài system packages + PHP extensions cần thiết
+WORKDIR /var/www/html
+
+COPY . /var/www/html
+
 RUN apt-get update && apt-get install -y \
-    git \
     unzip \
-    curl \
-    && docker-php-ext-install pdo pdo_mysql \
+    git \
+    libzip-dev \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql zip gd \
+    && a2enmod rewrite \
+    && sed -i 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/000-default.conf \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Cài Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /var/www
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Copy source code
-COPY . .
-
-# Cài dependency PHP
-RUN if [ -f composer.json ]; then composer install; fi
-
-# Expose port
-EXPOSE 8000
-
-# Run PHP built-in server
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+EXPOSE 80

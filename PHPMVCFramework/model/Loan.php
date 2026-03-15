@@ -10,6 +10,21 @@ class Loan {
         $this->db = \App\core\Database::getInstance();
     }
 
+    public function countAllLoans(){
+        $sql = "SELECT COUNT(*) FROM Loan";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
+    public function countByStatus($status){
+        $sql = "SELECT COUNT(*) FROM Loan WHERE Status = :status";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
     public function getAllLoans(){
         $sql = "
             SELECT 

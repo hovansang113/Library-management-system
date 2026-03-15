@@ -15,13 +15,19 @@ class LoanController extends Controller
         $userModel = new User();
         $loanModel = new Loan();
         $loan = $loanModel->getAllLoans();
+        $totalLoans = $loanModel->countAllLoans();
+        $borrowedCount = $loanModel->countByStatus('Borrowed');
+        $returnedCount = $loanModel->countByStatus('Returned');
         $books = $bookModel->getBookName();
         $users = $userModel->getAllUsers();
         $this->setLayout('admin/mainAdmin');
         return $this->render('admin/loanMangement', [
             'books' => $books,
             'members' => $users,
-            'loans' => $loan
+            'loans' => $loan,
+            'totalLoans' => $totalLoans,
+            'borrowedCount' => $borrowedCount,
+            'returnedCount' => $returnedCount
         ]);
     }
 
