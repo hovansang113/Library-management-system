@@ -11,29 +11,30 @@ class Book {
     }
 
     public function getLatestBooks($limit = 4){
-        $sql = "SELECT 
-                b.BookID, 
-                b.Title, 
-                b.Author, 
-                b.Image, 
-                c.CategoryName as Category, 
-                b.Quantity,
-                SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) as AvailableCopies
-            FROM Book b
-            INNER JOIN Category c on b.CategoryID = c.CategoryID
-            LEFT JOIN Book_Copy bc on b.BookID = bc.BookID
-            GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
-            ORDER BY b.BookID DESC
-            LIMIT :limit";
+        $sql = "SELECT
+                    b.BookID, 
+                    b.Title, 
+                    b.Author, 
+                    b.Image, 
+                    c.CategoryName as Category, 
+                    b.Quantity,
+                    SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) as AvailableCopies
+                FROM Book b
+                INNER JOIN Category c on b.CategoryID = c.CategoryID
+                LEFT JOIN Book_Copy bc on b.BookID = bc.BookID
+                GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
+                ORDER BY b.BookID DESC
+                LIMIT :limit";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getAllBooks() {
-        $sql = "SELECT 
+        $sql = "SELECT
                     b.BookID, 
                     b.Title, 
                     b.Author, 
@@ -55,22 +56,20 @@ class Book {
     }
 
     public function searchBooks($keyword) {
-        $sql = "
-            SELECT 
-                b.BookID,
-                b.Title,
-                b.Author,
-                b.Image,
-                c.CategoryName AS Category,
-                b.Quantity,
-                SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) AS AvailableCopies
-            FROM Book b
-            JOIN Category c ON b.CategoryID = c.CategoryID
-            LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
-            WHERE b.Title LIKE :keyword 
-            GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
-            ORDER BY b.BookID DESC
-        ";
+        $sql = "SELECT
+                    b.BookID,
+                    b.Title,
+                    b.Author,
+                    b.Image,
+                    c.CategoryName AS Category,
+                    b.Quantity,
+                    SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) AS AvailableCopies
+                FROM Book b
+                JOIN Category c ON b.CategoryID = c.CategoryID
+                LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
+                WHERE b.Title LIKE :keyword
+                GROUP BY b.BookID, b.Title, b.Author, b.Image, c.CategoryName, b.Quantity
+                ORDER BY b.BookID DESC";
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
@@ -80,12 +79,9 @@ class Book {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
     public function createBook($data) {
-        $sql = "
-            INSERT INTO Book (CategoryID, Title, Author, Image, Description, Quantity)
-            VALUES (:categoryId, :title, :author, :image, :description, :quantity)
-        ";
+        $sql = "INSERT INTO Book (CategoryID, Title, Author, Image, Description, Quantity)
+                VALUES (:categoryId, :title, :author, :image, :description, :quantity)";
 
         $stmt = $this->db->prepare($sql);
 
@@ -100,16 +96,14 @@ class Book {
     }
 
     public function updateBook($id, $data) {
-        $sql = "
-            UPDATE Book 
-            SET CategoryID = :categoryId,
-                Title = :title,
-                Author = :author,
-                Image = :image,
-                Description = :description,
-                Quantity = :quantity
-            WHERE BookID = :id
-        ";
+        $sql = "UPDATE Book
+                SET CategoryID = :categoryId,
+                    Title = :title,
+                    Author = :author,
+                    Image = :image,
+                    Description = :description,
+                    Quantity = :quantity
+                WHERE BookID = :id";
 
         $stmt = $this->db->prepare($sql);
 
@@ -126,11 +120,11 @@ class Book {
 
     public function deleteBook($id) {
         $check = $this->db->prepare("
-            SELECT COUNT(*) 
+            SELECT COUNT(*)
             FROM Loan l
             JOIN Book_Copy bc ON l.CopyID = bc.CopyID
             WHERE bc.BookID = :id
-              AND l.Status = 'Borrowed'
+            AND l.Status = 'Borrowed'
         ");
 
         $check->execute([':id' => $id]);
@@ -142,7 +136,6 @@ class Book {
             ];
         }
 
-   
         $stmt = $this->db->prepare("DELETE FROM Book WHERE BookID = :id");
 
         if ($stmt->execute([':id' => $id])) {
@@ -157,24 +150,25 @@ class Book {
             'message' => 'Xóa sách thất bại.'
         ];
     }
+
     public function getAllAuthors(){
         $sql = "SELECT DISTINCT Author FROM Book WHERE Author IS NOT NULL";
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function filterBooks($category, $author){
-        $sql = "SELECT 
-                b.BookID,
-                b.Title,
-                b.Author,
-                b.Image,
-                b.Quantity,
-                c.CategoryName AS Category,
-                SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) AS AvailableCopies
-            FROM Book b
-            JOIN Category c ON b.CategoryID = c.CategoryID
-            LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
-            WHERE 1";
+        $sql = "SELECT
+                    b.BookID,
+                    b.Title,
+                    b.Author,
+                    b.Image,
+                    b.Quantity,
+                    c.CategoryName AS Category,
+                    SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) AS AvailableCopies
+                FROM Book b
+                JOIN Category c ON b.CategoryID = c.CategoryID
+                LEFT JOIN Book_Copy bc ON b.BookID = bc.BookID
+                WHERE 1";
 
         $params = [];
 
@@ -187,7 +181,7 @@ class Book {
             $sql .= " AND b.Author = :author";
             $params[':author'] = $author;
         }
-
+    
         $sql .= " GROUP BY b.BookID, b.Title, b.Author, b.Image, b.Quantity, c.CategoryName";
 
         $stmt = $this->db->prepare($sql);
@@ -197,13 +191,13 @@ class Book {
     }
 
     public function getBookById($id) {
-        $sql = "SELECT 
-                    b.BookID, 
-                    b.Title, 
-                    b.Author, 
-                    b.Image, 
+        $sql = "SELECT
+                    b.BookID,
+                    b.Title,
+                    b.Author,
+                    b.Image,
                     b.Description,
-                    c.CategoryName as Category, 
+                    c.CategoryName as Category,
                     b.Quantity,
                     SUM(CASE WHEN bc.Status = 'Available' THEN 1 ELSE 0 END) as AvailableCopies
                 FROM Book b
@@ -216,8 +210,9 @@ class Book {
         $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
     public function getBookName() {
         $sql = "SELECT BookID, Title FROM Book";
         $stmt = $this->db->prepare($sql);
@@ -226,10 +221,9 @@ class Book {
     }
 
     public function getTotalBook(){
-        $sql = "SELECT SUM(Quantity) AS total_quantity FROM Book;";
+        $sql = "SELECT SUM(Quantity) AS total_quantity FROM Book";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total_quantity'];
     }
-
 }

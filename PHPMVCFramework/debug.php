@@ -13,15 +13,15 @@ $dotenv->load();
 
 $config = [
     'db' => [
-        'dsn'      => $_ENV['DB_DSN'] ?? '',
-        'user'     => $_ENV['DB_USER'] ?? '',
-        'password' => $_ENV['DB_PASSWORD'] ?? '',
+        'DB_DSN'      => $_ENV['DB_DSN'] ?? '',
+        'DB_USER'     => $_ENV['DB_USER'] ?? '',
+        'DB_PASSWORD' => $_ENV['DB_PASSWORD'] ?? '',
     ]
 ];
 
 try {
     $db = new Database($config['db']);
-    $stmt = $db->prepare('SELECT * FROM Member WHERE Role = "User"');
+    $stmt = $db->pdo->prepare('SELECT * FROM Member WHERE Role = "User"');
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

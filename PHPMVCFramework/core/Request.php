@@ -17,17 +17,32 @@ class Request
         // Lấy base path từ SCRIPT_NAME
         // Ví dụ: /PHPMVCFramework/public/index.php
         $scriptName = $_SERVER['SCRIPT_NAME']; // /public/index.php
-        $scriptDir  = dirname($scriptName);    // /public
-
-        // Nếu có base folder (ví dụ /myproject/public), loại bỏ nó khỏi path
-        if ($scriptDir !== '/' && strpos($path, $scriptDir) === 0) {
-            $path = substr($path, strlen($scriptDir));
+        
+        // Check if index.php is in the URI
+        if (strpos($path, $scriptName) === 0) {
+            $path = substr($path, strlen($scriptName));
+        } else {
+            $scriptDir  = dirname($scriptName);    // /public
+            // Nếu có base folder (ví dụ /myproject/public), loại bỏ nó khỏi path
+            if ($scriptDir !== '/' && strpos($path, $scriptDir) === 0) {
+                $path = substr($path, strlen($scriptDir));
+            }
         }
 
         // Đảm bảo path luôn bắt đầu bằng / và không rỗng
         $path = $path === '' || $path === false ? '/' : '/' . ltrim($path, '/');
 
         return $path;
+    }
+
+    public function getBasePath()
+    {
+        $scriptName = $_SERVER['SCRIPT_NAME'];
+        $base = dirname($scriptName);
+        if ($base === '\\' || $base === '.') {
+            return '';
+        }
+        return rtrim($base, '/\\');
     }
 
     public function method()

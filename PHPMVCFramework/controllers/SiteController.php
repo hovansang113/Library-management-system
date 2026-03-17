@@ -56,7 +56,7 @@ class SiteController extends Controller
         $books = $bookModel->getAllBooks();
 
         $this->setLayout('admin/mainAdmin');
-        return $this->render('admin/BookInventory', [
+        return $this->render('admin/bookInventory', [
             'categories' => $categories,
             'books' => $books
         ]);

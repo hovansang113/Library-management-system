@@ -10,9 +10,9 @@ class Database
     private static $instance = null; 
 
     public function __construct(array $config) {
-        $dsn = $config['dsn'] ?? '';
-        $user = $config['user'] ?? '';
-        $password = $config['password'] ?? '';
+        $dsn = $config['DB_DSN'] ?? '';
+        $user = $config['DB_USER'] ?? '';
+        $password = $config['DB_PASSWORD'] ?? '';
 
         if (empty($dsn)) {
             throw new \Exception('Error: DB_DSN is empty. Check your .env file.');

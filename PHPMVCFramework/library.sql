@@ -95,7 +95,7 @@ VALUES (
     'User'
 );
 
-CREATE TABLE Book_request (
+CREATE TABLE book_request (
     RequestID INT AUTO_INCREMENT PRIMARY KEY,
     MemberID INT NOT NULL,
     Title VARCHAR(255) NOT NULL,

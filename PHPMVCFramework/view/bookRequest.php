@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Request</title>
-    <link href="css/bookRequest.css" rel="stylesheet">
-</head>
-<body>
-        <div class="card">
+<div class="card">
     <h2>Book request</h2>
     <div class="subtitle">Submit a request for books you would like the library to add.</div>
 
@@ -44,5 +35,3 @@
         <?php endforeach; ?>
     <?php endif; ?>
 </div>
-</body>
-</html>
